@@ -22,7 +22,6 @@ procedure GenerateCreatures( M : TMap );
 
 implementation
 
-//==============================================================================
 procedure InitRoom( Room : PRoom );
 var
   i, j, x1, y1, w, h, k : Integer;
@@ -61,7 +60,6 @@ begin
     end;
 end;
 
-//==============================================================================
 procedure GenerateWalls( M : TMap );
 var
   i, j, n, l, x, y, dx, dy, k, napr : Integer;
@@ -206,7 +204,6 @@ begin
     end;
 end;
 
-//==============================================================================
 procedure ClearSmallRooms( M : TMap );
 var
   WallPat : TObjPat;
@@ -218,7 +215,6 @@ begin
       if Wave[ i, j ] = 0 then M.Objects.ObjCreate( i, j, WallPat );
 end;
 
-//==============================================================================
 procedure GenerateDoors( M : TMap );
 var
   i, j, k : Integer;
@@ -318,7 +314,6 @@ begin
       end;
     end;
 
-  //----------------------------------------------------------------------------
   for j := 1 to M.Height - 2 do
     for i := 1 to M.Width - 2 do
     begin
@@ -365,7 +360,6 @@ begin
     end;
 end;
 
-//==============================================================================
 procedure GenerateTreasures( M : TMap );
 var
   i, j, k, i1, j1, cnt : Integer;
@@ -454,7 +448,6 @@ begin
     end;
 end;
 
-//==============================================================================
 procedure TreasuresConvert( M : TMap );
 var
   i, j, n, k  : Integer;
@@ -493,7 +486,7 @@ begin
     ItmCnt := Random( 2 ) + 1;
     for j := 0 to ItmCnt - 1 do
     begin
-      n := Random( 7 );
+      n := Random( 8 );
       k := 1;
       ItemPat := nil;
       if n = 0 then ItemPat := TItemPat( Pattern_Get( 'ITEM', 'Health' ) );
@@ -503,9 +496,10 @@ begin
       if n = 4 then ItemPat := TItemPat( Pattern_Get( 'ITEM', 'Knife' ) );
       if n = 5 then ItemPat := TItemPat( Pattern_Get( 'ITEM', 'Arrow' ) );
       if n = 6 then ItemPat := TItemPat( Pattern_Get( 'ITEM', 'Arrow' ) );
+      if n = 7 then ItemPat := TItemPat( Pattern_Get( 'ITEM', 'Arrow' ) );
       if ItemPat <> nil then
       begin
-        if ( ItemPat.Name = 'SURIKEN' ) or ( ItemPat.Name = 'KNIFE' ) or ( ItemPat.Name = 'ARROW' ) then k := Random( 3 ) + 3;
+        if ( ItemPat.Name = 'SURIKEN' ) or ( ItemPat.Name = 'KNIFE' ) or ( ItemPat.Name = 'ARROW' ) then k := Random( 5 ) + 3;
         M.Objects.Obj[ CPos[ i ].X, CPos[ i ].Y ].CreateItem( ItemPat, k );
       end;
     end;
@@ -540,7 +534,7 @@ begin
   ItemPat := TItemPat( Pattern_Get( 'ITEM', 'Lamp' ) );
   M.Objects.Obj[ CPos[ n ].X, CPos[ n ].Y ].CreateItem( ItemPat, 1 );
 
-  ItmCnt := 4; //Bombs
+  ItmCnt := 3; //Bombs
   for i := 0 to ItmCnt - 1 do
   begin
     n := Random( CCnt );
@@ -592,7 +586,7 @@ begin
     end;
     if ItemPat <> nil then
     begin
-      if ( ItemPat.Name = 'SURIKEN' ) or ( ItemPat.Name = 'KNIFE' ) or ( ItemPat.Name = 'ROCK' ) then k := Random( 3 ) + 3;
+      if ( ItemPat.Name = 'SURIKEN' ) or ( ItemPat.Name = 'KNIFE' ) or ( ItemPat.Name = 'ROCK' ) then k := Random( 5 ) + 3;
       M.CreateItem( ItemPat, k, IPos[ i ].X, IPos[ i ].Y );
     end;
   end;
@@ -631,19 +625,29 @@ begin
         Cr := Map.CreateCreature( 'Leech', i, j );
         CCnt := 1;
       end;
-      if ( Cr = nil ) and ( Random( 5 ) > 2 ) then Cr := Map.CreateCreature( 'Skelet', i, j );
-      if ( Cr = nil ) and ( Random( 5 ) > 1 ) then Cr := Map.CreateCreature( 'Scorpion', i, j );
-      if ( Cr = nil ) and ( Random( 5 ) > 0 ) then Cr := Map.CreateCreature( 'Spider', i, j );
-      if Cr = nil then Cr := Map.CreateCreature( 'Snake', i, j );
+      if Cr = nil then
+      case Random(5) of
+        0:
+          Cr := Map.CreateCreature( 'Skelet', i, j );
+        1:
+          Cr := Map.CreateCreature( 'Spider', i, j );
+        2:
+          Cr := Map.CreateCreature( 'Scorpion', i, j );
+        3:
+          Cr := Map.CreateCreature( 'Darkeye', i, j );
+        else
+          Cr := Map.CreateCreature( 'Snake', i, j );
+      end;
       Cr.Team := 1;
       if ( Cr.Pat.Name = 'SKELET' ) and ( Random( 2 ) = 0 ) then
       begin
-        k := Random( 4 );
+        k := Random( 5 );
         ItemPat := nil;
         if k = 0 then ItemPat := TItemPat( Pattern_Get( 'ITEM', 'Sword' ) );
         if k = 1 then ItemPat := TItemPat( Pattern_Get( 'ITEM', 'Axe' ) );
         if k = 2 then ItemPat := TItemPat( Pattern_Get( 'ITEM', 'Rock' ) );
         if k = 3 then ItemPat := TItemPat( Pattern_Get( 'ITEM', 'Bow' ) );
+        if k = 4 then ItemPat := TItemPat( Pattern_Get( 'ITEM', 'Suriken' ) );
         if ItemPat <> nil then
         begin
           Cr.RHandItem.Pat := ItemPat;

@@ -66,6 +66,7 @@ begin
 
   AddSpell( 'Лечение', 3, 2 );
   AddSpell( 'Огненный шар', 3, 2 );
+  AddSpell( 'Регенерация', 3, 2 );
   AddSpell( 'Заморозка', 5, 2 );
   AddSpell( 'Гипноз', 7, 5 );
   AddSpell( 'Вампиризм', 3, 5 );

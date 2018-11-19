@@ -1,0 +1,8 @@
+Type = Creature
+Texture = darkeye.png
+Health = 10
+Strength = 2
+Bow = 5
+Throw = 5
+Exp = 2
+Agility = 1

@@ -200,7 +200,7 @@ begin
             Exit;
           end;
 
-      if Pat.Name = 'LEECH' then
+      if (Pat.Name = 'LEECH') or (Pat.Name = 'DARKEYE') then
         if m_Distance( TX, TY, Enemy.TX, Enemy.TY ) < 8 then
           if M.LineOfSign( TX, TY, Enemy.TX, Enemy.TY, False ) = True then
           begin
@@ -330,12 +330,12 @@ begin
       AtT  := 10;
       if HasEffect( 'Вампиризм' ) then
       begin
-        Health := Health + 3 + GetParamValue( 'Магия' );
+        Health := Health + GetParamValue( 'Магия' );
         if Health > HealthMax then Health := HealthMax;
       end;
       if ( ( Pat.Name = 'SCORPION' ) or ( Pat.Name = 'SPIDER' ) or ( Pat.Name = 'SNAKE' ) ) and ( Random( 10 ) = 0 ) then
       begin
-        Cr.AddEffect( 'Отравление', 41 );
+        Cr.AddEffect( 'Отравление', 41);
         if Cr = Hero then SomeTextOut( ( ScreenW - 200 ) div 2, ScreenH div 2 - 30, 'Отравление ядом' );
       end;
       Cr.WalkTo.X := -1;
@@ -510,9 +510,17 @@ begin
     HeroMoved := True;
     Exit;
   end;
+  if Spells[ SpellN ].Name = 'Регенерация' then
+  begin
+    AddEffect( 'Регенерация', 41);
+    Mana := Mana - Spells[ SpellN ].Mana;
+    SellSpellN := -1;
+    HeroMoved := True;
+    Exit;
+  end;
   if Spells[ SpellN ].Name = 'Вампиризм' then
   begin
-    AddEffect( 'Вампиризм', 21 );
+    AddEffect( 'Вампиризм', GetParamValue( 'Магия' ) * 3 );
     Mana := Mana - Spells[ SpellN ].Mana;
     SellSpellN := -1;
     HeroMoved := True;
@@ -591,6 +599,11 @@ begin
     begin
       Health := Health - 1;
       if Health < 0 then Health := 0;
+    end;
+    if Effects[ i ].Name = 'Регенерация' then
+    begin
+      Health := Health + 1;
+      if Health > HealthMax then Health := HealthMax;
     end;
     if ( Effects[ i ].Int = 1 ) and ( Effects[ i ].Name = 'Гипноз' ) then Team := 1;
     if Effects[ i ].Int < 100 then Effects[ i ].Int := Effects[ i ].Int - 1;
