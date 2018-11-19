@@ -1,0 +1,4 @@
+Type = Item
+GameName = "Зелье здоровья"
+Texture = health.png
+CanGroup = True

@@ -1,0 +1,7 @@
+Type = Creature
+Texture = snake.png
+Health = 15
+Strength = 5
+Agility = 7
+Unarmed = 7
+Exp = 3

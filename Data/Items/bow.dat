@@ -1,0 +1,7 @@
+Type = Item
+GameName = Ћук
+Texture = bow.png
+EquipTex = ebow.png
+Equip = RHand
+Bow = True
+Damage = 7

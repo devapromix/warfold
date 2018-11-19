@@ -1,0 +1,4 @@
+Type = Item
+GameName = Противоядие
+Texture = antidote.png
+CanGroup = True

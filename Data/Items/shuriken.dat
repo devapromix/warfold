@@ -1,0 +1,9 @@
+Type = Item
+GameName = —юрикен
+Texture = shuriken.png
+Equip = RHand
+CanGroup = True
+Throw = True
+Rotate = True
+Damage = 5
+Rock = True

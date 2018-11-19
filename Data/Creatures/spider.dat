@@ -1,0 +1,7 @@
+Type = Creature
+Texture = spider.png
+Health = 12
+Strength = 4
+Agility = 8
+Unarmed = 8
+Exp = 3

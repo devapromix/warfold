@@ -1,0 +1,10 @@
+Type = Creature
+Texture = skelet.png
+Health = 25
+Strength = 6
+Agility = 3
+Axe = 3
+Sword = 3
+Bow = 3
+Throw = 3
+Exp = 3

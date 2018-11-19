@@ -1,0 +1,7 @@
+Type = Creature
+Texture = golem.png
+Health = 50
+Strength = 5
+Unarmed = 5
+Agility = 1
+Exp = 3

@@ -1,0 +1,7 @@
+Type = Item
+GameName = Топор
+Texture = axe.png
+EquipTex = eaxe.png
+Equip = RHand
+Axe = True
+Damage = 10

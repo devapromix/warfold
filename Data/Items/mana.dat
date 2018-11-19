@@ -1,0 +1,4 @@
+Type = Item
+Texture = mana.png
+GameName = "Зелье маны"
+CanGroup = True

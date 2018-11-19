@@ -1,0 +1,8 @@
+Type = Creature
+Texture = leech.png
+Health = 30
+Strength = 4
+Bow = 7
+Throw = 7
+Exp = 8
+Agility = 1

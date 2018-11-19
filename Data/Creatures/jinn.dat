@@ -1,0 +1,7 @@
+Type = Creature
+Texture = jinn.png
+Health = 60
+Strength = 7
+Unarmed = 7
+Agility = 7
+Exp = 3

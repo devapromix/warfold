@@ -1,0 +1,8 @@
+Type = Item
+GameName = Стрела
+Texture = arrow.png
+Equip = LHand
+CanGroup = True
+FlyAng = True
+Arrow = True
+Damage = 7

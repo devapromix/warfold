@@ -1,0 +1,9 @@
+Type = Item
+GameName = "Метательный нож"
+Texture = knife.png
+Equip = RHand
+CanGroup = True
+Throw = True
+FlyAng = True
+Damage = 5
+Rock = True

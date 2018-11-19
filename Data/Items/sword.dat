@@ -1,0 +1,7 @@
+Type = Item
+GameName = Μεχ
+Texture = sword.png
+EquipTex = esword.png
+Equip = RHand
+Sword = True
+Damage = 10

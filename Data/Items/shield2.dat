@@ -1,0 +1,6 @@
+Type = Item
+GameName = ўит
+Texture = shield2.png
+EquipTex = eshield2.png
+Equip = LHand
+Shield = True

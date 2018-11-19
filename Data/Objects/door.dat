@@ -1,0 +1,3 @@
+Type = Object
+Texture = door.png
+Wall = True

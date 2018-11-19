@@ -1,0 +1,5 @@
+Type = Item
+GameName = Шлем
+Texture = helmet.png
+EquipTex = ehelmet.png
+Equip = Head

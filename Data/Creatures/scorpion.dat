@@ -1,0 +1,5 @@
+Type = Creature
+Texture = scorpion.png
+Health = 20
+Strength = 4
+Exp = 3
