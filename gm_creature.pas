@@ -209,6 +209,15 @@ begin
             Exit;
           end;
 
+      if (Pat.Name = 'NECROMANCER') then
+        if m_Distance( TX, TY, Enemy.TX, Enemy.TY ) < 8 then
+          if M.LineOfSign( TX, TY, Enemy.TX, Enemy.TY, False ) = True then
+          begin
+            M.CreateBullet( TItemPat( Pattern_Get( 'ITEM', 'Fireball' ) ), Self, Enemy );
+            WalkTo.X  := -1;
+            Exit;
+          end;
+
       WalkTo := Point2D( Enemy.TX, Enemy.TY );
 
       if ( si = nil ) and ( RHandItem.Count > 0 ) then

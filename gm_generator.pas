@@ -599,10 +599,11 @@ var
   bool          : Boolean;
   Cr            : TCreature;
   ItemPat       : TItemPat;
-  CCnt          : Integer;
+  CCnt, NCnt    : Integer;
 begin
   cnt := Random( 10 ) + 20;
   CCnt := 0;
+  NCnt := 0;
   repeat
     i := Random( M.Width - 2 ) + 1;
     j := Random( M.Height - 2 ) + 1;
@@ -626,14 +627,22 @@ begin
         CCnt := 1;
       end;
       if Cr = nil then
-      case Random(5) of
+      case Random(6) of
         0:
-          Cr := Map.CreateCreature( 'Skelet', i, j );
+          if NCnt = 0 then
+          begin
+            Cr := Map.CreateCreature( 'Necromancer', i, j );
+            NCnt := 1;
+          end
+          else
+            Cr := Map.CreateCreature( 'Skelet', i, j );
         1:
-          Cr := Map.CreateCreature( 'Spider', i, j );
+          Cr := Map.CreateCreature( 'Skelet', i, j );
         2:
-          Cr := Map.CreateCreature( 'Scorpion', i, j );
+          Cr := Map.CreateCreature( 'Spider', i, j );
         3:
+          Cr := Map.CreateCreature( 'Scorpion', i, j );
+        4:
           Cr := Map.CreateCreature( 'Darkeye', i, j );
         else
           Cr := Map.CreateCreature( 'Snake', i, j );
@@ -660,7 +669,7 @@ begin
           end;
         end;
       end;
-      if ( Cr.Pat.Name = 'SKELET' ) and ( Random( 4 ) = 0 ) then
+      if (( Cr.Pat.Name = 'SKELET' ) and ( Random( 4 ) = 0 )) or (Cr.Pat.Name = 'NECROMANCER') then
       begin
         ItemPat := TItemPat( Pattern_Get( 'ITEM', 'Health' ) );
         Cr.CreateItem( ItemPat, 1 );

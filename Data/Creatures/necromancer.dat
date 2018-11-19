@@ -1,0 +1,8 @@
+Type = Creature
+Texture = necromancer.png
+Health = 40
+Strength = 5
+Bow = 9
+Throw = 9
+Exp = 15
+Agility = 5
