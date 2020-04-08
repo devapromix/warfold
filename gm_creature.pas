@@ -257,7 +257,9 @@ begin
   if ( x2 < 0 ) or ( y2 < 0 ) or ( x2 >= M.Width ) or ( y2 >= M.Height ) then Exit;
   if M.Objects.Obj[ x2, y2 ] <> nil then
   begin
-    if ( Self = Hero ) and ( M.Objects.Obj[ x2, y2 ].Pat.Container ) then LookAtObj := M.Objects.Obj[ x2, y2 ];
+
+    if ( Self = Hero ) and not ( M.Objects.Obj[ x2, y2 ].Pat.Locked ) and ( M.Objects.Obj[ x2, y2 ].Pat.Container ) then
+      LookAtObj := M.Objects.Obj[ x2, y2 ];
 
     if M.Objects.Obj[ x2, y2 ].Pat.Name = 'DOOR' then
       if M.Objects.Obj[ x2, y2 ].FrameN = 0 then
@@ -269,12 +271,20 @@ begin
         M.UpdateFog( TX, TY, 7 );
         Exit;
       end;
-    if M.Objects.Obj[ x2, y2 ].Pat.Name = 'CHEST' then
+    if (M.Objects.Obj[ x2, y2 ].Pat.Name = 'CHEST') then
       if M.Objects.Obj[ x2, y2 ].FrameN = 0 then
       begin
         M.Objects.Obj[ x2, y2 ].FrameN := 1;
         Exit;
       end;
+    if (M.Objects.Obj[ x2, y2 ].Pat.Name = 'CHEST2') then
+      if M.Objects.Obj[ x2, y2 ].FrameN = 0 then
+      begin
+        if not ( M.Objects.Obj[ x2, y2 ].Pat.Locked ) then
+          M.Objects.Obj[ x2, y2 ].FrameN := 1;
+        Exit;
+      end;
+      
     if M.Objects.Obj[ x2, y2 ].BlockWalk = True then Exit;
   end;
   for i := 0 to M.Creatures.Count - 1 do

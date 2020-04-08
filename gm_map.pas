@@ -432,7 +432,7 @@ begin
     if ( Objects.Obj[ tx, ty ].Pat.Name = 'DOOR' ) and ( Objects.Obj[ tx, ty ].FrameN = 1 ) then bool := True;
     if Objects.Obj[ tx, ty ].Pat.Container then
     begin
-      if ( Objects.Obj[ tx, ty ].Pat.Name = 'CHEST' ) and ( Objects.Obj[ tx, ty ].FrameN = 0 ) then Exit;
+      if (( Objects.Obj[ tx, ty ].Pat.Name = 'CHEST' )or( Objects.Obj[ tx, ty ].Pat.Name = 'CHEST2' )) and ( Objects.Obj[ tx, ty ].FrameN = 0 ) then Exit;
       if Objects.Obj[ tx, ty ].CreateItem( DragItem.Pat, DragCount ) then
       begin
         Result := True;

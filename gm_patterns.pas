@@ -31,6 +31,7 @@ type
     IsWall    : Boolean;
     BlockWalk : Boolean;
     BlockLook : Boolean;
+    Locked : Boolean;
     Container : Boolean;
   end;
 
@@ -179,6 +180,7 @@ begin
       if IsWall then BlockLook := True;
       BlockWalk := dat.Param( 'BlockWalk' ).Bool( BlockWalk );
       BlockLook := dat.Param( 'BlockLook' ).Bool( BlockLook );
+      Locked := dat.Param( 'Locked' ).Bool( False );
       Container := dat.Param( 'Container' ).Bool( False );
     end;
 

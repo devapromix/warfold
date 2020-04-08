@@ -1,0 +1,6 @@
+Type = Object
+Texture = chest2.png
+BlockWalk = True
+BlockLook = False
+Locked = True
+Container = True

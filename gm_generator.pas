@@ -1,6 +1,6 @@
 unit gm_generator;
 
-interface
+interface                        
 
 uses
   zglHeader, gm_types, gm_patterns, gm_map, gm_creature, gm_item, gm_pathfind;
@@ -363,11 +363,21 @@ end;
 procedure GenerateTreasures( M : TMap );
 var
   i, j, k, i1, j1, cnt : Integer;
-  ChestPat  : TObjPat;
+  ChestPat,ChestPat2  : TObjPat;
   bool      : Boolean;
   PatNames  : array [ 0..3 ] of String;
+
+procedure AddChest;
+begin
+  if Random(5) > 0 then
+    M.Objects.ObjCreate( i, j, ChestPat )
+  else
+    M.Objects.ObjCreate( i, j, ChestPat2 );
+end;
+
 begin
   ChestPat := TObjPat( Pattern_Get( 'OBJECT', 'Chest' ) );
+  ChestPat2 := TObjPat( Pattern_Get( 'OBJECT', 'Chest2' ) );
 
   cnt := Random( 10 ) + 20;
   repeat
@@ -421,7 +431,7 @@ begin
       k := 0;
       for j1 := j - 7 to j + 7 do
         for i1 := i - 7 to i + 7 do
-          if M.Objects.PatName( i1, j1 ) = 'CHEST' then k := k + 1;
+          if (M.Objects.PatName( i1, j1 ) = 'CHEST') or (M.Objects.PatName( i1, j1 ) = 'CHEST2') then k := k + 1;
       if k > 2 then bool := False;
       if ( k = 2 ) and ( Random( 10 ) = 0 ) then bool := False;
       if ( k = 1 ) and ( Random( 5 ) = 0 ) then bool := False;
@@ -429,7 +439,7 @@ begin
 
     if bool = True then
     begin
-      M.Objects.ObjCreate( i, j, ChestPat );
+      AddChest;
       cnt := cnt - 1;
     end;
   until cnt = 0;
@@ -444,7 +454,7 @@ begin
       if M.Objects.PatName( i + 1, j ) = 'WALL' then k := k + 1;
       if M.Objects.PatName( i, j - 1 ) = 'WALL' then k := k + 1;
       if M.Objects.PatName( i, j + 1 ) = 'WALL' then k := k + 1;
-      if ( k = 3 ) and ( Random( 5 ) > 0 ) then M.Objects.ObjCreate( i, j, ChestPat );
+      if ( k = 3 ) and ( Random( 5 ) > 0 ) then AddChest;
     end;
 end;
 
@@ -464,7 +474,7 @@ begin
     for i := 0 to M.Width - 1 do
     begin
       if M.Objects.Obj[ i, j ] = nil then Continue;
-      if M.Objects.Obj[ i, j ].Pat.Name <> 'CHEST' then Continue;
+      if (M.Objects.Obj[ i, j ].Pat.Name <> 'CHEST') and (M.Objects.Obj[ i, j ].Pat.Name <> 'CHEST2') then Continue;
 
       if Random( 3 ) > 0 then
       begin
@@ -586,13 +596,12 @@ begin
     end;
     if ItemPat <> nil then
     begin
-      if ( ItemPat.Name = 'SURIKEN' ) or ( ItemPat.Name = 'KNIFE' ) or ( ItemPat.Name = 'ROCK' ) then k := Random( 5 ) + 3;
+      if ( ItemPat.Name = 'SURIKEN' ) or ( ItemPat.Name = 'KNIFE' ) or ( ItemPat.Name = 'ROCK' ) then k := Random( 7 ) + 3;
       M.CreateItem( ItemPat, k, IPos[ i ].X, IPos[ i ].Y );
     end;
   end;
 end;
 
-//==============================================================================
 procedure GenerateCreatures( M : TMap );
 var
   i, j, cnt, k  : Integer;
