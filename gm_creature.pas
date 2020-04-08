@@ -69,7 +69,6 @@ implementation
 uses
   gm_map, gm_pathfind, gm_gui;
 
-//==============================================================================
 constructor TCreature.Create( CrPat : TCrPat );
 var
   i : Integer;
@@ -95,14 +94,12 @@ begin
   ItemsCnt := 0;
 end;
 
-//==============================================================================
 destructor TCreature.Destroy;
 begin
 
   inherited;
 end;
 
-//==============================================================================
 procedure TCreature.Draw;
 var
   cx, cy, i : Integer;
@@ -144,7 +141,6 @@ begin
   end;
 end;
 
-//==============================================================================
 procedure TCreature.Update;
 var
   M   : TMap;
@@ -213,7 +209,7 @@ begin
         if m_Distance( TX, TY, Enemy.TX, Enemy.TY ) < 8 then
           if M.LineOfSign( TX, TY, Enemy.TX, Enemy.TY, False ) = True then
           begin
-            M.CreateBullet( TItemPat( Pattern_Get( 'ITEM', 'Fireball' ) ), Self, Enemy );
+            M.CreateBullet( TItemPat( Pattern_Get( 'ITEM', 'Poisonball' ) ), Self, Enemy );
             WalkTo.X  := -1;
             Exit;
           end;
@@ -376,7 +372,6 @@ begin
   end;
 end;
 
-//==============================================================================
 function TCreature.CreateItem( ItemPat : TItemPat; Count : Integer ) : Boolean;
 var
   i : Integer;
@@ -408,7 +403,6 @@ begin
   Items[ ItemsCnt - 1 ].Count := Count;
 end;
 
-//==============================================================================
 function TCreature.GetParamValue( ParamName : String ) : Integer;
 var
   i : Integer;
@@ -428,7 +422,6 @@ begin
     end;
 end;
 
-//==============================================================================
 procedure TCreature.AddExp( ExpCnt : Integer );
 begin
   Exp := Exp + ExpCnt;
@@ -444,7 +437,6 @@ begin
   end;
 end;
 
-//==============================================================================
 procedure TCreature.WalkAway( tx1, ty1 : Integer );
 var
   M           : TMap;
@@ -486,7 +478,6 @@ begin
   end;
 end;
 
-//==============================================================================
 procedure TCreature.AddSpell( SpellName : String );
 var
   i, n : Integer;
@@ -504,7 +495,6 @@ begin
   Spells[ SpellsCnt - 1 ] := AllSpells[ n ];
 end;
 
-//==============================================================================
 procedure TCreature.UseSpell( SpellN : Integer );
 var
   i, j, k : Integer;
@@ -552,7 +542,6 @@ begin
   end;
 end;
 
-//==============================================================================
 procedure TCreature.AddEffect( EffectName : String; Time : Integer );
 var
   i : Integer;
@@ -570,7 +559,6 @@ begin
   Effects[ EffectsCnt - 1 ].Int   := Time;
 end;
 
-//==============================================================================
 procedure TCreature.DelEffect( EffectName : String );
 var
   i, j : Integer;
@@ -585,7 +573,6 @@ begin
     end;
 end;
 
-//==============================================================================
 function TCreature.HasEffect( EffectName : String ) : Boolean;
 var
   i : Integer;
@@ -596,7 +583,6 @@ begin
   Result := False;
 end;
 
-//==============================================================================
 procedure TCreature.UpdateEffects;
 var
   i, j : Integer;

@@ -60,7 +60,6 @@ implementation
 uses
   gm_pathfind;
 
-//==============================================================================
 constructor TMap.Create( w, h, n : Integer );
 begin
   Width     := w;
@@ -75,7 +74,6 @@ begin
   SetLength( Fog, w, h );
 end;
 
-//==============================================================================
 destructor TMap.Destroy;
 var
   i : Integer;
@@ -89,7 +87,6 @@ begin
   inherited;
 end;
 
-//==============================================================================
 procedure TMap.Draw;
 var
   i, j  : Integer;
@@ -126,7 +123,6 @@ begin
     end;
 end;
 
-//==============================================================================
 procedure TMap.Update;
 var
   i, j, s, Dmg  : Integer;
@@ -165,6 +161,12 @@ begin
         begin
           s   := Bullets[ i ].Owner.GetParamValue( 'Магия' );
           Dmg := Round( ( s + 5 ) * 0.5 + ( Dmg + 5 ) * 0.3 );
+        end;
+        if Bullets[ i ].Pat.Name = 'FIREBALL' then
+        begin
+          s   := Bullets[ i ].Owner.GetParamValue( 'Магия' );
+          Dmg := 3;
+          Cr.AddEffect('Отравление', s + 1);
         end;
 
         if Random( 20 ) < Bullets[ i ].Enemy.GetParamValue( 'Agility' ) then Dmg := Dmg div 2;

@@ -39,7 +39,7 @@ begin
   zgl_Disable( APP_USE_LOG );
   zgl_Enable( CLIP_INVISIBLE );
 
-  ScreenW := 1366;//1024;
+  ScreenW := 1024;
   ScreenH := 768;   
 
   scr_SetOptions( ScreenW, ScreenH, REFRESH_MAXIMUM, FullScr, VSync );
