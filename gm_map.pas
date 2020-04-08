@@ -539,7 +539,7 @@ begin
       bool := False;
     end;
 
-    if ( bool = True ) and ( Cr.Pat.Name = 'LEECH' ) and ( Cr.Enemy <> nil ) and ( Random( 5 ) = 0 ) then
+    if ( bool = True ) and ((Cr.Pat.Name = 'LEECH') or (Cr.Pat.Name = 'NECROMANCER')) and ( Cr.Enemy <> nil ) and ( Random( 5 ) = 0 ) then
     begin
       x := 0;
       y := 0;
@@ -549,7 +549,13 @@ begin
       if Objects.Obj[ Cr.TX + x, Cr.TY + y ] = nil then
         if GetCreature( Cr.TX + x, Cr.TY + y ) = nil then
         begin
-          Cr2 := Map.CreateCreature( 'Skelet', Cr.TX + x, Cr.TY + y );
+          if (Cr.Pat.Name = 'LEECH') then
+            Cr2 := Map.CreateCreature( 'Skelet', Cr.TX + x, Cr.TY + y );
+          if (Cr.Pat.Name = 'NECROMANCER') then
+          begin
+            Cr2 := Map.CreateCreature( 'Leech', Cr.TX + x, Cr.TY + y );
+            Cr.AddEffect( 'Регенерация', Cr.HealthMax + 1);
+          end;
           Cr2.Team := Cr.Team;
           Cr.Enemy := nil;
           bool := False;
@@ -582,7 +588,6 @@ begin
   end;
 end;
 
-//==============================================================================
 procedure TMap.CreateBullet( BulletItemPat : TItemPat; Owner, Enemy : TCreature );
 var
   i : Integer;
@@ -601,7 +606,6 @@ begin
   Bullets[ i ].Dist  := m_Distance( Owner.TX * 32, Owner.TY * 32, Enemy.TX * 32, Enemy.TY * 32 );
 end;
 
-//==============================================================================
 procedure TMap.Explosive( tx, ty : Integer );
 var
   i, j : Integer;
@@ -641,7 +645,6 @@ begin
   Hero.Enemy := nil;
 end;
 
-//==============================================================================
 procedure TMap.ExplosiveBombs;
 var
   i, j, k : Integer;
