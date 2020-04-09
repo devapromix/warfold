@@ -6,3 +6,7 @@ Bow = 7
 Throw = 7
 Exp = 8
 Agility = 1
+
+Drop = Health
+Rarity = 100
+Amount = 1

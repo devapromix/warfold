@@ -37,7 +37,6 @@ function Point2D( X, Y : Integer ) : TPoint2D;
 
 implementation
 
-//==============================================================================
 function Point2D( X, Y : Integer ) : TPoint2D;
 begin
   Result.X := X;

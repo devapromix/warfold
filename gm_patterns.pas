@@ -43,6 +43,9 @@ type
     ParamValue    : array of Integer;
     ParamsCnt     : Integer;
     Exp           : Integer;
+    Drop          : string;
+    Rarity        : Integer;
+    Amount        : Integer;
   end;
 
 type
@@ -188,17 +191,21 @@ begin
   if Pat.pType = 'CREATURE' then
     with TCrPat( Pat ) do
     begin
-      FrmW    := dat.Param( 'FramesWidth' ).Int( 0 );
-      FrmH    := dat.Param( 'FramesHeight' ).Int( 0 );
+      FrmW      := dat.Param( 'FramesWidth' ).Int( 0 );
+      FrmH      := dat.Param( 'FramesHeight' ).Int( 0 );
 
       Health    := dat.Param( 'Health' ).Int( 40 );
-      Mana      := dat.Param( 'Mana' ).Int( 10 );      
+      Mana      := dat.Param( 'Mana' ).Int( 10 );
       Exp       := dat.Param( 'Exp' ).Int( 1 );
 
       SetLength( ParamValue, CrParamsCnt );
       for i := 0 to CrParamsCnt - 1 do
         if i < 4 then ParamValue[ i ] := dat.Param( CrParams[ i ].Name ).Int( 4 )
           else ParamValue[ i ] := dat.Param( CrParams[ i ].Name ).Int( 0 );
+
+      Drop      := dat.Param( 'Drop' ).Str( '' );
+      Rarity    := dat.Param( 'Rarity' ).Int( 100 );
+      Amount    := dat.Param( 'Amount' ).Int( 1 );
     end;
 
   //---------- Item ------------------------------------------------------------

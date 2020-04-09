@@ -3,7 +3,7 @@ unit gm_generator;
 interface                        
 
 uses
-  zglHeader, gm_types, gm_patterns, gm_map, gm_creature, gm_item, gm_pathfind;
+  math, zglHeader, gm_types, gm_patterns, gm_map, gm_creature, gm_item, gm_pathfind;
 
 type
   PRoom = ^TRoom;
@@ -504,7 +504,7 @@ begin
       if n = 2 then ItemPat := TItemPat( Pattern_Get( 'ITEM', 'Antidote' ) );
       if n = 3 then ItemPat := TItemPat( Pattern_Get( 'ITEM', 'Suriken' ) );
       if n = 4 then ItemPat := TItemPat( Pattern_Get( 'ITEM', 'Knife' ) );
-      if n = 5 then ItemPat := TItemPat( Pattern_Get( 'ITEM', 'Arrow' ) );
+      if n = 5 then ItemPat := TItemPat( Pattern_Get( 'ITEM', 'Key' ) );
       if n = 6 then ItemPat := TItemPat( Pattern_Get( 'ITEM', 'Arrow' ) );
       if n = 7 then ItemPat := TItemPat( Pattern_Get( 'ITEM', 'Arrow' ) );
       if ItemPat <> nil then
@@ -674,20 +674,17 @@ begin
           if ItemPat.Bow = True then
           begin
             Cr.LHandItem.Pat    := TItemPat( Pattern_Get( 'ITEM', 'Arrow' ) );
-            Cr.LHandItem.Count  := Random( 6 ) + 4;
+            Cr.LHandItem.Count  := Random( 7 ) + 3;
           end;
         end;
       end;
-      if (( Cr.Pat.Name = 'SKELET' ) and ( Random( 4 ) = 0 )) or (Cr.Pat.Name = 'LEECH') or (Cr.Pat.Name = 'NECROMANCER') then
+
+      if (Cr.Pat.Drop <> '') and (Random(100) < Cr.Pat.Rarity) then
       begin
-        ItemPat := TItemPat( Pattern_Get( 'ITEM', 'Health' ) );
-        Cr.CreateItem( ItemPat, 1 );
-      end;  
-      if ( Cr.Pat.Name = 'LEECH' ) then
-      begin
-        ItemPat := TItemPat( Pattern_Get( 'ITEM', 'Key' ) );
-        Cr.CreateItem( ItemPat, 1 );
-      end;  
+        ItemPat := TItemPat( Pattern_Get( 'ITEM', Cr.Pat.Drop ) );
+        Cr.CreateItem( ItemPat, Cr.Pat.Amount );
+      end;
+
       cnt := cnt - 1;
     end;
   until cnt = 0;

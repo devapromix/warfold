@@ -35,13 +35,11 @@ var
 
 implementation
 
-//==============================================================================
 function PointInRect( px, py, x, y, w, h : Integer ) : Boolean;
 begin
   Result := ( ( px > x ) and ( py > y ) and ( px < x + w ) and ( py < y + h ) );
 end;
 
-//==============================================================================
 procedure GUI_Draw;
 var
   x, y, i, j, n, k  : Integer;
@@ -53,8 +51,6 @@ begin
   for i := 0 to 2 do
     ssprite2d_Draw( ScrtsTex, ScreenW - 200, 200 + i * 200, 200, 200, 0, 40 );
   Map.DrawMinimap( ScreenW - Map.Width * 5, 0 );
-
-  //----------------------------------------------------------------------------
 
   pr2d_Line( ScreenW - 200, 310, ScreenW, 310, $000000, 120, PR2D_FILL );
   pr2d_Line( ScreenW - 200, 311, ScreenW, 311, $FFFFFF, 100, PR2D_FILL );
@@ -107,7 +103,6 @@ begin
   if PanelN = 2 then i := 1 else i := 0;
   ssprite2d_Draw( SpellTex, x + 27 * 2 - 2 + i, y + i - 2, 32, 32, 0, 220 );
 
-  //----------------------------------------------------------------------------
   if PanelN = 0 then
   begin
     x := ( ScreenW - 200 ) + ( 200 - DollTex.Width ) div 2;
@@ -228,7 +223,6 @@ begin
     end
   end;
 
-  //----------------------------------------------------------------------------
   if PanelN = 2 then
   begin
     pr2d_Rect( ScreenW - 200 + 16, 370, 200 - 32, 380, $000000, 100, PR2D_FILL );
@@ -270,7 +264,6 @@ begin
     end;
   end;
 
-  //----------------------------------------------------------------------------
   if LookAtObj <> nil then
   begin
     pr2d_Rect( ChestX, ChestY, 4 * 33 + 40, 2 * 33 + 20, $616777, 255, PR2D_FILL );
@@ -309,7 +302,6 @@ begin
   end;
 end;
 
-//==============================================================================
 procedure GUI_Update;
 var
   x, y, i, j, imo, iob, n, k : Integer;
@@ -409,7 +401,6 @@ begin
     end;
   end;
 
-  //----------------------------------------------------------------------------
   if PanelN = 0 then
   begin
     i := ( ScreenW - 200 ) + ( 200 - DollTex.Width ) div 2;
@@ -448,7 +439,6 @@ begin
     if imo <> -1 then InitItemHint( i * 33 + ScreenW - 200, j * 33 + 590, @Hero.Items[ imo ] );
   end;
 
-  //----------------------------------------------------------------------------
   if ( PanelN = 2 ) and ( mouse_Click( M_BLEFT ) ) and ( PointInRect( mouse_X, mouse_Y, 840, 370, 170, 380 ) )then
   begin
     x := ScreenW - 200 + 34;
@@ -492,7 +482,6 @@ begin
     end;
   end;
 
-  //----------------------------------------------------------------------------
   if ( LookAtObj <> nil ) and ( DragItem = nil ) then
   begin
     if mouse_Click( M_BLEFT ) then
@@ -548,7 +537,6 @@ begin
   if ( mouse_Click( M_BLEFT ) ) and ( iob <> -1 ) then Item_UpdateSlot( @LookAtObj.Items[ iob ], '' );
   if iob <> -1 then InitItemHint( i * 33 + ChestX + 10, j * 33 + ChestY + 10, @LookAtObj.Items[ iob ] );
 
-  //----------------------------------------------------------------------------
   if DragItem <> nil then
   begin
     if mouse_Click( M_BRIGHT ) then
@@ -577,7 +565,6 @@ begin
     else if nmtime > 30 then Hint.Show := True;
 end;
 
-//==============================================================================
 function MouseOverGUI : Boolean;
 begin
   Result := True;
@@ -594,7 +581,6 @@ begin
   Result := False;
 end;
 
-//==============================================================================
 procedure InitItemHint( x, y : Integer; Item : PItem );
 var
   w : Integer;
@@ -615,7 +601,6 @@ begin
   HintItem := Item;
 end;
 
-//==============================================================================
 procedure SomeTextOut( x, y : Integer; Text : String );
 var
   w : Integer;

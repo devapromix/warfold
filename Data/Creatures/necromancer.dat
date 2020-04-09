@@ -1,8 +1,12 @@
 Type = Creature
 Texture = necromancer.png
-Health = 40
+Health = 20
 Strength = 5
 Bow = 9
 Throw = 9
 Exp = 15
 Agility = 5
+
+Drop = Health
+Rarity = 100
+Amount = 3

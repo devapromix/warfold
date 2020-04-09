@@ -8,3 +8,7 @@ Sword = 3
 Bow = 3
 Throw = 3
 Exp = 3
+
+Drop = Health
+Rarity = 25
+Amount = 1
