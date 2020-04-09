@@ -33,7 +33,7 @@ begin
   zgl_Reg( SYS_DRAW, @gmDraw );
   zgl_Reg( SYS_EXIT, @gmQuit );
 
-  wnd_SetCaption( 'Rogue' );
+  wnd_SetCaption( 'Warfold' );
   wnd_ShowCursor( True );
 
   zgl_Disable( APP_USE_LOG );

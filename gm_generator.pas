@@ -509,7 +509,7 @@ begin
       if n = 7 then ItemPat := TItemPat( Pattern_Get( 'ITEM', 'Arrow' ) );
       if ItemPat <> nil then
       begin
-        if ( ItemPat.Name = 'SURIKEN' ) or ( ItemPat.Name = 'KNIFE' ) or ( ItemPat.Name = 'ARROW' ) then k := Random( 5 ) + 3;
+        if ( ItemPat.Name = 'SURIKEN' ) or ( ItemPat.Name = 'KNIFE' ) or ( ItemPat.Name = 'ARROW' ) then k := Random( 7 ) + 3;
         M.Objects.Obj[ CPos[ i ].X, CPos[ i ].Y ].CreateItem( ItemPat, k );
       end;
     end;
@@ -670,17 +670,22 @@ begin
         begin
           Cr.RHandItem.Pat := ItemPat;
           Cr.RHandItem.Count := 1;
-          if ItemPat.Throw = True then Cr.RHandItem.Count := Random( 3 ) + 3;
+          if ItemPat.Throw = True then Cr.RHandItem.Count := Random( 7 ) + 3;
           if ItemPat.Bow = True then
           begin
             Cr.LHandItem.Pat    := TItemPat( Pattern_Get( 'ITEM', 'Arrow' ) );
-            Cr.LHandItem.Count  := Random( 3 ) + 4;
+            Cr.LHandItem.Count  := Random( 6 ) + 4;
           end;
         end;
       end;
-      if (( Cr.Pat.Name = 'SKELET' ) and ( Random( 4 ) = 0 )) or (Cr.Pat.Name = 'NECROMANCER') then
+      if (( Cr.Pat.Name = 'SKELET' ) and ( Random( 4 ) = 0 )) or (Cr.Pat.Name = 'LEECH') or (Cr.Pat.Name = 'NECROMANCER') then
       begin
         ItemPat := TItemPat( Pattern_Get( 'ITEM', 'Health' ) );
+        Cr.CreateItem( ItemPat, 1 );
+      end;  
+      if ( Cr.Pat.Name = 'LEECH' ) then
+      begin
+        ItemPat := TItemPat( Pattern_Get( 'ITEM', 'Key' ) );
         Cr.CreateItem( ItemPat, 1 );
       end;  
       cnt := cnt - 1;
