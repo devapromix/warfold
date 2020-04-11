@@ -13,6 +13,7 @@ type
     Walls   : array of array of Byte;
   end;
 
+procedure GenerateShrine(M : TMap);
 procedure GenerateWalls( M : TMap );
 procedure ClearSmallRooms( M : TMap );
 procedure GenerateDoors( M : TMap );
@@ -58,6 +59,24 @@ begin
       if ( i = 0 ) or ( j = 0 ) or ( i = w ) or ( j = h ) then
         if not( ( i = 0 ) or ( j = 0 ) or ( i = Room.W - 1 ) or ( j = Room.H - 1 ) ) then Room.Walls[ i, j ] := 2;
     end;
+end;
+
+procedure GenerateShrine(M : TMap);
+var
+  X, Y: Integer;
+  ShrinePat: TObjPat;
+begin
+  case Random(3) of
+    0..1:
+      ShrinePat := TObjPat(Pattern_Get('OBJECT', 'LifeShrine'));
+    else
+      ShrinePat := TObjPat(Pattern_Get('OBJECT', 'ManaShrine'));
+  end;
+  repeat
+    X := Random(M.Width - 1) + 1;
+    Y := Random(M.Height - 1) + 1;
+  until (M.Objects.Obj[X, Y] = nil);
+  M.Objects.ObjCreate(X, Y, ShrinePat);
 end;
 
 procedure GenerateWalls( M : TMap );

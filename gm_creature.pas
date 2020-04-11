@@ -261,6 +261,8 @@ begin
     if ( Self = Hero ) and not ( M.Objects.Obj[ x2, y2 ].Pat.Locked ) and ( M.Objects.Obj[ x2, y2 ].Pat.Container ) then
       LookAtObj := M.Objects.Obj[ x2, y2 ];
 
+
+
     if M.Objects.Obj[ x2, y2 ].Pat.Name = 'DOOR' then
       if M.Objects.Obj[ x2, y2 ].FrameN = 0 then
       begin
@@ -269,6 +271,20 @@ begin
         M.Objects.Obj[ x2, y2 ].BlockLook := False;
         M.Objects.Obj[ x2, y2 ].BlockWalk := False;
         M.UpdateFog( TX, TY, 7 );
+        Exit;
+      end;
+    if (M.Objects.Obj[ x2, y2 ].Pat.Shrine) then
+      if M.Objects.Obj[ x2, y2 ].FrameN = 0 then
+      if Self = Hero then
+      begin
+        HeroMoved := True;
+        M.Objects.Obj[ x2, y2 ].FrameN := 1;
+        case M.Objects.Obj[ x2, y2 ].Pat.ShrineType of
+        0:
+          Self.Health := Self.HealthMax;
+        1:
+          Self.Mana := Self.ManaMax;
+        end;
         Exit;
       end;
     if (M.Objects.Obj[ x2, y2 ].Pat.Name = 'CHEST') then

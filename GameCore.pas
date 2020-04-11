@@ -67,6 +67,8 @@ begin
   CreateWave( Map, x, y, -1, 0, True );
   GenerateCreatures( Map );
 
+  GenerateShrine(Map);
+
   Hero := Map.CreateCreature( 'Man', x, y );
   Map.UpdateFog( Hero.TX, Hero.TY, 7 );
 

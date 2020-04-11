@@ -1,0 +1,6 @@
+Type = Object
+Texture = manashrine.png
+BlockWalk = False
+BlockLook = False
+Shrine = True
+ShrineType = 1

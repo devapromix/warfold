@@ -31,8 +31,10 @@ type
     IsWall    : Boolean;
     BlockWalk : Boolean;
     BlockLook : Boolean;
-    Locked : Boolean;
+    Locked    : Boolean;
     Container : Boolean;
+    Shrine    : Boolean;
+    ShrineType: Integer;
   end;
 
 //------ Creature --------------------------------------------------------------
@@ -185,6 +187,8 @@ begin
       BlockLook := dat.Param( 'BlockLook' ).Bool( BlockLook );
       Locked := dat.Param( 'Locked' ).Bool( False );
       Container := dat.Param( 'Container' ).Bool( False );
+      Shrine := dat.Param( 'Shrine' ).Bool( False );
+      ShrineType := dat.Param( 'ShrineType' ).Int( 0 );
     end;
 
   //---------- Creature --------------------------------------------------------

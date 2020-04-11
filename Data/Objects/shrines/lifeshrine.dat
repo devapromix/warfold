@@ -1,0 +1,6 @@
+Type = Object
+Texture = lifeshrine.png
+BlockWalk = False
+BlockLook = False
+Shrine = True
+ShrineType = 0

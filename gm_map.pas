@@ -118,8 +118,10 @@ begin
   for j := 0 to Height - 1 do
     for i := 0 to Width - 1 do
     begin
-      if Fog[ i, j ] = 0 then pr2d_Rect( i * 32, j * 32, 32, 32, $000000, 255, PR2D_FILL );
-      if Fog[ i, j ] = 1 then pr2d_Rect( i * 32, j * 32, 32, 32, $000000, 150, PR2D_FILL );
+      if Fog[ i, j ] = 0 then
+        pr2d_Rect( i * 32, j * 32, 32, 32, $000000, 255, PR2D_FILL );
+      if Fog[ i, j ] = 1 then
+        pr2d_Rect( i * 32, j * 32, 32, 32, $000000, 150, PR2D_FILL );
     end;
 end;
 
@@ -388,8 +390,10 @@ begin
       end;    
       if Objects.Obj[ i, j ] <> nil then
       begin
-        if Objects.Obj[ i, j ].Pat.Name = 'WALL' then pr2d_Rect( x + i * 5, y + j * 5, 5, 5, $999999, 255, PR2D_FILL );
-        if Objects.Obj[ i, j ].Pat.Name = 'DOOR' then pr2d_Rect( x + i * 5, y + j * 5, 5, 5, $775544, 255, PR2D_FILL );
+        if Objects.Obj[ i, j ].Pat.Name = 'WALL' then
+          pr2d_Rect( x + i * 5, y + j * 5, 5, 5, $999999, 255, PR2D_FILL );
+        if Objects.Obj[ i, j ].Pat.Name = 'DOOR' then
+          pr2d_Rect( x + i * 5, y + j * 5, 5, 5, $775544, 255, PR2D_FILL );
       end;
     end;
   pr2d_Rect( x + Hero.TX * 5, y + Hero.TY * 5, 5, 5, $FFFFFF, 255, PR2D_FILL );
@@ -403,7 +407,8 @@ var
 begin
   if ItemPat.CanGroup then
     for i := 0 to ItemsCnt - 1 do
-      if ( Items[ i ].TX = TX ) and ( Items[ i ].TY = TY ) and ( Items[ i ].Pat = ItemPat ) then
+      if ( Items[ i ].TX = TX ) and ( Items[ i ].TY = TY )
+        and ( Items[ i ].Pat = ItemPat ) then
       begin
         Items[ i ].Count := Items[ i ].Count + Count;
         Exit;
@@ -429,10 +434,12 @@ begin
   if Objects.Obj[ tx, ty ] <> nil then
   begin
     bool := False;
-    if ( Objects.Obj[ tx, ty ].Pat.Name = 'DOOR' ) and ( Objects.Obj[ tx, ty ].FrameN = 1 ) then bool := True;
+    if ( Objects.Obj[ tx, ty ].Pat.Name = 'DOOR' )
+      and ( Objects.Obj[ tx, ty ].FrameN = 1 ) then bool := True;
+
     if Objects.Obj[ tx, ty ].Pat.Container then
     begin
-      if (( Objects.Obj[ tx, ty ].Pat.Name = 'CHEST' )or( Objects.Obj[ tx, ty ].Pat.Name = 'CHEST2' )) and ( Objects.Obj[ tx, ty ].FrameN = 0 ) then Exit;
+      if (( Objects.Obj[ tx, ty ].Pat.Name = 'CHEST' ) or ( Objects.Obj[ tx, ty ].Pat.Name = 'CHEST2' )) and ( Objects.Obj[ tx, ty ].FrameN = 0 ) then Exit;
       if Objects.Obj[ tx, ty ].CreateItem( DragItem.Pat, DragCount ) then
       begin
         Result := True;
