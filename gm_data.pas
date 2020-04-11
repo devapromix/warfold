@@ -30,8 +30,8 @@ implementation
 //==============================================================================
 procedure Data_Load;
 begin
-  Fnt         := font_LoadFromFile( 'Data\Sprites\font.zfi' );
-  Fnt2        := font_LoadFromFile( 'Data\Sprites\font2.zfi' );
+  Fnt         := font_LoadFromFile( 'Data\Fonts\font.zfi' );
+  Fnt2        := font_LoadFromFile( 'Data\Fonts\font2.zfi' );
 
   WBlackTex   := tex_LoadFromFile( 'Data\Sprites\wblack.png' );
   WWhiteTex   := tex_LoadFromFile( 'Data\Sprites\wwhite.png' );
