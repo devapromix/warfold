@@ -79,6 +79,11 @@ type
     Rock      : Boolean;
   end;
 
+type
+  TMapPat = class(TPattern)
+    Name    : String;
+  end;
+
 //------ Spells ----------------------------------------------------------------
 type
   TSpell = record

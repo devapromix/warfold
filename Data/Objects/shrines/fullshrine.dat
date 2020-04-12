@@ -1,0 +1,6 @@
+Type = Object
+Texture = fullshrine.png
+BlockWalk = False
+BlockLook = False
+Shrine = True
+ShrineType = 2

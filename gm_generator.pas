@@ -66,8 +66,10 @@ var
   X, Y: Integer;
   ShrinePat: TObjPat;
 begin
-  case Random(3) of
-    0..1:
+  case Random(6) of
+    0:
+      ShrinePat := TObjPat(Pattern_Get('OBJECT', 'FullShrine'));
+    1..2:
       ShrinePat := TObjPat(Pattern_Get('OBJECT', 'LifeShrine'));
     else
       ShrinePat := TObjPat(Pattern_Get('OBJECT', 'ManaShrine'));

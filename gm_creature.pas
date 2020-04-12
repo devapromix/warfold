@@ -284,6 +284,11 @@ begin
           Self.Health := Self.HealthMax;
         1:
           Self.Mana := Self.ManaMax;
+        2:
+          begin
+            Self.Health := Self.HealthMax;
+            Self.Mana := Self.ManaMax;
+          end;
         end;
         Exit;
       end;
