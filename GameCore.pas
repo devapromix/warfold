@@ -23,7 +23,7 @@ begin
   Data_Load;
 
   Map := TMap.Create( 40, 40, 1 );
-  Map.Ground.Fill( 'Floor' );
+  Map.Ground.Fill( 'Grass' );
 
   repeat
     GenerateWalls( Map );
