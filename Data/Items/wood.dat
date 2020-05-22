@@ -1,0 +1,4 @@
+Type = Item
+GameName = Древесина
+Texture = wood.png
+CanGroup = True
