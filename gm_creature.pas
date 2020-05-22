@@ -303,8 +303,14 @@ begin
         end;
     if (M.Objects.Obj[x2, y2].Pat.Name = 'TREE') then
     begin
+      if M.Objects.Obj[x2, y2].Durability > 0 then
+      begin
+        M.Objects.Obj[x2, y2].Durability := M.Objects.Obj[x2, y2].Durability - 1;
+        Exit;
+      end;
       ItemPat := TItemPat(Pattern_Get('ITEM', 'WOOD'));
       M.CreateItem(ItemPat, 1, x2, y2);
+      M.Objects.Obj[x2, y2].Free;
       M.Objects.Obj[x2, y2] := nil;
       Exit;
     end;

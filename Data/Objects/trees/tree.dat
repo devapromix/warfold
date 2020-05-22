@@ -2,3 +2,4 @@ Type = Object
 Texture = tree.png
 BlockWalk = True
 BlockLook = True
+Durability = 10
