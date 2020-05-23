@@ -3,7 +3,7 @@ program Warfold;
 uses
   FastMM4, zglHeader, GameCore, gm_types;
 
-procedure gmInit;
+procedure gmInit; 
 begin
   Game_Init;
 end;

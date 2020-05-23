@@ -94,7 +94,7 @@ end;
 // ==============================================================================
 procedure TObjects.Draw;
 var
-  i, j, d: Integer;
+  i, j: Integer;
   Pat: TObjPat;
 begin
   for j := 0 to Height - 1 do

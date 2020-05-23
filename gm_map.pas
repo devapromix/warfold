@@ -465,9 +465,10 @@ end;
 procedure TMap.MoveCreatures;
 var
   i, j, d, x, y : Integer;
-  Cr, Cr2, e    : TCreature;
+  Cr, Cr2, e    : TCreature;   
   bool          : Boolean;
 begin
+  Cr2 := nil;
   for i := 0 to Creatures.Count - 1 do
   begin
     Cr := TCreature( Creatures[ i ] );

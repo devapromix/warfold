@@ -306,6 +306,7 @@ begin
       if M.Objects.Obj[x2, y2].Durability > 0 then
       begin
         M.Objects.Obj[x2, y2].Durability := M.Objects.Obj[x2, y2].Durability - 1;
+        HeroMoved := True;
         Exit;
       end;
       ItemPat := TItemPat(Pattern_Get('ITEM', 'WOOD'));
