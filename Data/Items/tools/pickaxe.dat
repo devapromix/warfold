@@ -1,7 +1,7 @@
 Type = Item
-GameName = Топор
-Texture = hatchet.png
+GameName = Кирка
+Texture = pickaxe.png
 EquipTex = eaxe.png
 Equip = RHand
-Hatchet = True
+Pickaxe = True
 Damage = 2
