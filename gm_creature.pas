@@ -37,12 +37,24 @@ type
     ParamValue: array of Integer;
 
     Items: array of TItem;
+
     ItemsCnt: Integer;
     RHandItem: TItem;
     LHandItem: TItem;
     HeadItem: TItem;
     BodyItem: TItem;
     LegsItem: TItem;
+
+    LTCraftItem: TItem;
+    CTCraftItem: TItem;
+    RTCraftItem: TItem;
+    LCCraftItem: TItem;
+    CCCraftItem: TItem;
+    RCCraftItem: TItem;
+    LDCraftItem: TItem;
+    CDCraftItem: TItem;
+    RDCraftItem: TItem;
+    RSCraftItem: TItem;
 
     constructor Create(CrPat: TCrPat);
     destructor Destroy; override;

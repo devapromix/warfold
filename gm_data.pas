@@ -17,10 +17,12 @@ var
   BagTex      : zglPTexture;
   StatsTex    : zglPTexture;
   SpellTex    : zglPTexture;
+  CraftTex    : zglPTexture;
   ScrtsTex    : zglPTexture;
   Btn2Tex     : zglPTexture;
   FireTex     : zglPTexture;
   IceTex      : zglPTexture;
+  BoxTex      : zglPTexture;
 
 procedure Data_Load;
 procedure Data_Free;
@@ -45,9 +47,11 @@ begin
   BagTex      := tex_LoadFromFile( 'Data\Sprites\bag.png' );
   StatsTex    := tex_LoadFromFile( 'Data\Sprites\stats.png' );
   SpellTex    := tex_LoadFromFile( 'Data\Sprites\spellbook.png' );
+  CraftTex    := tex_LoadFromFile( 'Data\Sprites\craft.png' );
   ScrtsTex    := tex_LoadFromFile( 'Data\Sprites\scratches.png' );
   FireTex     := tex_LoadFromFile( 'Data\Sprites\fire.png' );
   IceTex      := tex_LoadFromFile( 'Data\Sprites\ice.png' );
+  BoxTex      := tex_LoadFromFile( 'Data\Sprites\box.png' );
   tex_SetFrameSize( BtnTex, 32, 32 );
   tex_SetFrameSize( Btn1Tex, 16, 16 );
   tex_SetFrameSize( Btn2Tex, 16, 16 );
