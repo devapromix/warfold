@@ -661,7 +661,7 @@ begin
     M.Objects.Obj[CPos[n].X, CPos[n].Y].CreateItem(ItemPat, 1);
   end;
 
-  ItmCnt := 1;
+  ItmCnt := 2;
   repeat
     i := Random(11) - 5;
     j := Random(11) - 5;
@@ -673,10 +673,14 @@ begin
       Continue;
     if M.Objects.Obj[i, j] <> nil then
       Continue;
-
-    ItemPat := TItemPat(Pattern_Get('ITEM', 'Book'));
+    case ItmCnt of
+      1:
+        ItemPat := TItemPat(Pattern_Get('ITEM', 'Book'));
+      2:
+        ItemPat := TItemPat(Pattern_Get('ITEM', 'Hatchet'));
+    end;
     M.CreateItem(ItemPat, 1, i, j);
-    ItmCnt := 0;
+    ItmCnt := ItmCnt - 1;
   until ItmCnt = 0;
 
   // Lamp
