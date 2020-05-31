@@ -277,6 +277,7 @@ var
     M.CreateItem(ItemPat, Count, x2, y2);
     M.Objects.Obj[x2, y2].Free;
     M.Objects.Obj[x2, y2] := nil;
+    M.UpdateFog(x2, y2, 7);
   end;
 
 begin
