@@ -2,6 +2,7 @@ Type = Item
 GameName = Камень
 Texture = rock.png
 Equip = RHand
+Rotate = True
 CanGroup = True
 Throw = True
 Damage = 4
