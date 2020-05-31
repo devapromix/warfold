@@ -3,5 +3,6 @@ GameName = Кирка
 Texture = pickaxe.png
 EquipTex = eaxe.png
 Equip = RHand
+Axe = True
 Pickaxe = True
 Damage = 2

@@ -1,5 +1,6 @@
 Type = Item
 GameName = Топор
+Axe = True
 Texture = hatchet.png
 EquipTex = eaxe.png
 Equip = RHand
