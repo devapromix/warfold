@@ -79,6 +79,8 @@ type
     Arrow: Boolean;
     Shield: Boolean;
     Rock: Boolean;
+    Hatchet: Boolean;
+    Pickaxe: Boolean;
   end;
 
 type
@@ -254,6 +256,9 @@ begin
       Arrow := dat.Param('Arrow').Bool(False);
       Shield := dat.Param('Shield').Bool(False);
       Rock := dat.Param('Rock').Bool(False);
+
+      Hatchet := dat.Param('Hatchet').Bool(False);
+      Pickaxe := dat.Param('Pickaxe').Bool(False);
     end;
 
   dat.Free;

@@ -119,13 +119,6 @@ begin
     pr2d_Rect(0, 0, ScreenW, ScreenH, $232323, 200, PR2D_FILL);
     text_DrawEx(Fnt, ScreenW div 2, ScreenH div 2, 1, 0, 'Game Over', 255, $FFFFFF, TEXT_HALIGN_CENTER);
   end;
-
-  if Map.Creatures.Count = 1 then
-  begin
-    text_DrawEx(Fnt, (ScreenW - 200) div 2, ScreenH div 2 - 100, 1, 0, A2U8('Больше в подземелье никого не осталось.'), 255, $FFFFFF,
-      TEXT_HALIGN_CENTER);
-    text_DrawEx(Fnt, (ScreenW - 200) div 2, ScreenH div 2 - 100 + 30, 1, 0, A2U8('Видимо это победа. Поздравляю!'), 255, $FFFFFF, TEXT_HALIGN_CENTER);
-  end;
 end;
 
 // ==============================================================================

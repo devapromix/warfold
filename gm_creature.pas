@@ -323,7 +323,7 @@ begin
           end;
           Exit;
         end;
-    if (M.Objects.Obj[x2, y2].Pat.Name = 'TREE') then
+    if (M.Objects.Obj[x2, y2].Pat.Name = 'TREE') and (Self.RHandItem.Count > 0) and RHandItem.Pat.Hatchet then
     begin
       if M.Objects.Obj[x2, y2].Durability > 0 then
       begin
@@ -334,7 +334,7 @@ begin
       DropItem('WOOD', Math.RandomRange(2, 3));
       Exit;
     end;
-    if (M.Objects.Obj[x2, y2].Pat.Name = 'WALL') then
+    if (M.Objects.Obj[x2, y2].Pat.Name = 'WALL') and (Self.RHandItem.Count > 0) and RHandItem.Pat.Pickaxe then
     begin
       if M.Objects.Obj[x2, y2].Durability > 0 then
       begin
