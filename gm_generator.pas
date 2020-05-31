@@ -679,7 +679,7 @@ begin
         ItemPat := TItemPat(Pattern_Get('ITEM', 'Book'));
       2:
         ItemPat := TItemPat(Pattern_Get('ITEM', 'Hatchet'));
-      3:
+      else
         ItemPat := TItemPat(Pattern_Get('ITEM', 'Pickaxe'));
     end;
     M.CreateItem(ItemPat, 1, i, j);

@@ -1,3 +1,4 @@
 Type = Object
 Texture = wall.png
 Wall = True
+Durability = 10

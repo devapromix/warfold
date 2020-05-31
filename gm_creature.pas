@@ -79,7 +79,7 @@ var
 implementation
 
 uses
-  gm_map, gm_pathfind, gm_gui;
+  Math, gm_map, gm_pathfind, gm_gui;
 
 constructor TCreature.Create(CrPat: TCrPat);
 var
@@ -270,6 +270,15 @@ var
   Cr: TCreature;
   si: Single;
   ItemPat: TItemPat;
+
+  procedure DropItem(const Name: string; Count: Byte);
+  begin
+    ItemPat := TItemPat(Pattern_Get('ITEM', Name));
+    M.CreateItem(ItemPat, Count, x2, y2);
+    M.Objects.Obj[x2, y2].Free;
+    M.Objects.Obj[x2, y2] := nil;
+  end;
+
 begin
   LookAtObj := nil;
   M := TMap(MP);
@@ -321,10 +330,18 @@ begin
         HeroMoved := True;
         Exit;
       end;
-      ItemPat := TItemPat(Pattern_Get('ITEM', 'WOOD'));
-      M.CreateItem(ItemPat, 1, x2, y2);
-      M.Objects.Obj[x2, y2].Free;
-      M.Objects.Obj[x2, y2] := nil;
+      DropItem('WOOD', Math.RandomRange(2, 3));
+      Exit;
+    end;
+    if (M.Objects.Obj[x2, y2].Pat.Name = 'WALL') then
+    begin
+      if M.Objects.Obj[x2, y2].Durability > 0 then
+      begin
+        M.Objects.Obj[x2, y2].Durability := M.Objects.Obj[x2, y2].Durability - 1;
+        HeroMoved := True;
+        Exit;
+      end;
+      DropItem('ROCK', Math.RandomRange(2, 3));
       Exit;
     end;
     if (M.Objects.Obj[x2, y2].Pat.Name = 'CHEST') then
