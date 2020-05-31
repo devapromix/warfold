@@ -661,7 +661,8 @@ begin
     M.Objects.Obj[CPos[n].X, CPos[n].Y].CreateItem(ItemPat, 1);
   end;
 
-  ItmCnt := 2;
+  // Предмети навколо гравця
+  ItmCnt := 3;
   repeat
     i := Random(11) - 5;
     j := Random(11) - 5;
@@ -678,6 +679,8 @@ begin
         ItemPat := TItemPat(Pattern_Get('ITEM', 'Book'));
       2:
         ItemPat := TItemPat(Pattern_Get('ITEM', 'Hatchet'));
+      3:
+        ItemPat := TItemPat(Pattern_Get('ITEM', 'Pickaxe'));
     end;
     M.CreateItem(ItemPat, 1, i, j);
     ItmCnt := ItmCnt - 1;
