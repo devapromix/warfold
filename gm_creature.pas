@@ -331,7 +331,7 @@ begin
         HeroMoved := True;
         Exit;
       end;
-      DropItem('WOOD', Math.RandomRange(2, 3));
+      DropItem('WOOD', Math.RandomRange(2, 5));
       Exit;
     end;
     if (M.Objects.Obj[x2, y2].Pat.Name = 'WALL') and (Self.RHandItem.Count > 0) and RHandItem.Pat.Pickaxe then
@@ -342,7 +342,7 @@ begin
         HeroMoved := True;
         Exit;
       end;
-      DropItem('ROCK', Math.RandomRange(2, 3));
+      DropItem('ROCK', Math.RandomRange(2, 5));
       Exit;
     end;
     if (M.Objects.Obj[x2, y2].Pat.Name = 'CHEST') then
