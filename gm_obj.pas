@@ -3,7 +3,7 @@ unit gm_obj;
 interface
 
 uses
-  zglHeader, gm_data, gm_patterns, gm_item;
+  zglHeader, gm_data, gm_patterns, gm_item, gm_types;
 
 type
   TObj = class
@@ -105,6 +105,9 @@ begin
       Pat := Obj[i, j].Pat;
 
       asprite2d_Draw(Pat.Tex, i * 32, j * 32, 32, 32, 0, Obj[i, j].FrameN + 1);
+
+      if (Obj[i, j].Durability < Pat.Durability) then
+        asprite2d_Draw(BreakTex, i * 32, j * 32, 32, 32, 0, Obj[i, j].Durability + 1);
 
       if Obj[i, j].Pat.IsWall = False then
         Continue;

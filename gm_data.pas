@@ -23,6 +23,7 @@ var
   FireTex     : zglPTexture;
   IceTex      : zglPTexture;
   BoxTex      : zglPTexture;
+  BreakTex    : zglPTexture;
 
 procedure Data_Load;
 procedure Data_Free;
@@ -52,7 +53,10 @@ begin
   FireTex     := tex_LoadFromFile( 'Data\Sprites\fire.png' );
   IceTex      := tex_LoadFromFile( 'Data\Sprites\ice.png' );
   BoxTex      := tex_LoadFromFile( 'Data\Sprites\box.png' );
+  BreakTex    := tex_LoadFromFile( 'Data\Sprites\break.png' );
+
   tex_SetFrameSize( BtnTex, 32, 32 );
+  tex_SetFrameSize( BreakTex, 32, 32 );
   tex_SetFrameSize( Btn1Tex, 16, 16 );
   tex_SetFrameSize( Btn2Tex, 16, 16 );
 

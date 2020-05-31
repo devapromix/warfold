@@ -96,7 +96,8 @@ begin
   Objects.Draw;
 
   for i := 0 to ItemsCnt - 1 do
-    if Items[ i ].Count > 0 then Item_Draw( @Items[ i ], Items[ i ].TX * 32, Items[ i ].TY * 32, 0, 0 );
+    if Items[ i ].Count > 0 then
+      Item_Draw( @Items[ i ], Items[ i ].TX * 32, Items[ i ].TY * 32, 0, 0 );
 
   for i := 0 to Creatures.Count - 1 do
   begin
