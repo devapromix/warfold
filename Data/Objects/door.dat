@@ -1,3 +1,4 @@
 Type = Object
 Texture = door.png
 Wall = True
+Durability = 10
