@@ -8,10 +8,13 @@ uses
 
 procedure Game_Init;
 procedure Game_Draw;
-procedure Game_Update;
+procedure Game_Update; 
 procedure Game_Quit;
 
 implementation
+
+uses
+  Dialogs, gm_craft;
 
 // ==============================================================================
 procedure Game_Init;
@@ -124,9 +127,23 @@ end;
 // ==============================================================================
 procedure Game_Update;
 var
-  TX, TY, cx, cy, n: Integer;
+  TX, TY, CX, CY, N, I: Integer;
   Cr, Cr2: TCreature;
   bool: Boolean;
+  ObjPat: TObjPat;
+
+  procedure ItemToObject(ItName, ObjName: string);
+  begin
+      if (DragItem.Pat.Name = ItName) then
+      begin
+        ObjPat := TObjPat(Pattern_Get('OBJECT', ObjName));
+        Map.Objects.ObjCreate(cX, cY, ObjPat);
+        HeroMoved := True;
+        DragItem.Count := DragItem.Count - 1;
+        if DragItem.Count = 0 then
+          DragItem := nil;    
+      end;
+  end;
 begin
   if key_Press(K_ESCAPE) then
     zgl_Exit;
@@ -249,6 +266,12 @@ begin
         if (Cr.Team = 0) and (Cr.Enemy = nil) then
           Cr.WalkAway(Hero.TX, Hero.TY);
   end;
+
+  // Установка блоков на землю
+  if (Mouse_Click(M_BRIGHT)) and (MouseOverGUI = False) and (CX <> -1) and (Map.Objects.Obj[CX, CY] = nil)
+    and (DragItem <> nil) and (ABS(CX - Hero.TX) < 2) and (ABS(CY - Hero.TY) < 2) then
+      for I := 0 to High(ItemToObjRec) do
+        ItemToObject(ItemToObjRec[I].Item, ItemToObjRec[I].Obj);
 
   n := 0;
   if key_Press(K_LEFT) or key_Press(K_KP_4) then

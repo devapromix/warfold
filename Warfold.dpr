@@ -1,14 +1,18 @@
 program Warfold;
 
 uses
-  FastMM4, zglHeader, GameCore, gm_types;
+  FastMM4,
+  zglHeader,
+  GameCore,
+  gm_types,
+  gm_craft in 'gm_craft.pas';
 
 procedure gmInit;
 begin
   Game_Init;
 end;
 
-procedure gmDraw;
+procedure gmDraw; 
 begin
   Game_Draw;
 end;

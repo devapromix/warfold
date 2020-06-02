@@ -79,7 +79,7 @@ var
 implementation
 
 uses
-  Math, gm_map, gm_pathfind, gm_gui;
+  Math, gm_map, gm_pathfind, gm_gui, gm_craft;
 
 constructor TCreature.Create(CrPat: TCrPat);
 var
@@ -265,19 +265,66 @@ end;
 // ==============================================================================
 procedure TCreature.Walk(dx, dy: Integer);
 var
-  x2, y2, i, j, Dmg, s: Integer;
+  x2, y2, i, j, Dmg, S: Integer;
   M: TMap;
   Cr: TCreature;
   si: Single;
-  ItemPat: TItemPat;
 
   procedure DropItem(const Name: string; Count: Byte);
+  var
+    ItemPat: TItemPat;
   begin
     ItemPat := TItemPat(Pattern_Get('ITEM', Name));
     M.CreateItem(ItemPat, Count, x2, y2);
     M.Objects.Obj[x2, y2].Free;
     M.Objects.Obj[x2, y2] := nil;
     M.UpdateFog(x2, y2, 7);
+  end;
+
+  function ObjectToItem(ObjName, ItName: string; ItCount: Integer; IsTool: Boolean): Boolean;
+  begin
+    Result := False;
+    if (Self = Hero) and (M.Objects.Obj[x2, y2] <> nil) and (M.Objects.Obj[x2, y2].Pat.Name = ObjName) and IsTool then
+    begin
+      if M.Objects.Obj[x2, y2].Durability > 0 then
+      begin
+        M.Objects.Obj[x2, y2].Durability := M.Objects.Obj[x2, y2].Durability - 1;
+        HeroMoved := True;
+        Result := True;
+        Exit;
+      end;
+      DropItem(ItName, ItCount);
+      Result := True;
+    end;
+  end;
+
+  function ItemFromObj: Boolean;
+  var
+    N, Cnt: Integer;
+    Tool: Boolean;
+  begin
+    Tool := False;
+    Result := False;
+    for N := 0 to High(ObjToItemRec) do
+    begin
+      case ObjToItemRec[N].Tool of
+        tlPickaxe:
+          Tool := (Self.RHandItem.Count > 0) and Self.RHandItem.Pat.Pickaxe;
+        tlHatchet:
+          Tool := (Self.RHandItem.Count > 0) and Self.RHandItem.Pat.Hatchet;
+      end;
+      case ObjToItemRec[N].ItemCount of
+        ic2To4:
+          Cnt := Math.RandomRange(2, 5);
+        else
+          Cnt := 1;
+      end;
+      if ObjectToItem(ObjToItemRec[N].Obj, ObjToItemRec[N].Item, Cnt, Tool) then
+      begin
+        Result := True;
+        Exit;
+      end;
+    end;
   end;
 
 begin
@@ -289,11 +336,15 @@ begin
     Exit;
   if M.Objects.Obj[x2, y2] <> nil then
   begin
+    // Добывание предметов из объектов
+    if ItemFromObj then Exit;
 
-    if (Self = Hero) and not(M.Objects.Obj[x2, y2].Pat.Locked) and (M.Objects.Obj[x2, y2].Pat.Container) then
+     if (Self = Hero) and not(M.Objects.Obj[x2, y2].Pat.Locked) and (M.Objects.Obj[x2, y2].Pat.Container) then
       LookAtObj := M.Objects.Obj[x2, y2];
 
-    if M.Objects.Obj[x2, y2].Pat.Name = 'DOOR' then
+    if (M.Objects.Obj[x2, y2].Pat.Name = 'DOOR') then
+    begin
+      if ObjectToItem('DOOR', 'ITEM_DOOR', 1, (Self.RHandItem.Count > 0) and Self.RHandItem.Pat.Hatchet) then Exit;
       if M.Objects.Obj[x2, y2].FrameN = 0 then
       begin
         if Self = Hero then
@@ -304,6 +355,7 @@ begin
         M.UpdateFog(TX, TY, 7);
         Exit;
       end;
+    end;
     if (M.Objects.Obj[x2, y2].Pat.Shrine) then
       if M.Objects.Obj[x2, y2].FrameN = 0 then
         if Self = Hero then
@@ -323,28 +375,7 @@ begin
           end;
           Exit;
         end;
-    if (M.Objects.Obj[x2, y2].Pat.Name = 'TREE') and (Self.RHandItem.Count > 0) and RHandItem.Pat.Hatchet then
-    begin
-      if M.Objects.Obj[x2, y2].Durability > 0 then
-      begin
-        M.Objects.Obj[x2, y2].Durability := M.Objects.Obj[x2, y2].Durability - 1;
-        HeroMoved := True;
-        Exit;
-      end;
-      DropItem('WOOD', Math.RandomRange(2, 5));
-      Exit;
-    end;
-    if (M.Objects.Obj[x2, y2].Pat.Name = 'WALL') and (Self.RHandItem.Count > 0) and RHandItem.Pat.Pickaxe then
-    begin
-      if M.Objects.Obj[x2, y2].Durability > 0 then
-      begin
-        M.Objects.Obj[x2, y2].Durability := M.Objects.Obj[x2, y2].Durability - 1;
-        HeroMoved := True;
-        Exit;
-      end;
-      DropItem('ROCK', Math.RandomRange(2, 5));
-      Exit;
-    end;
+
     if (M.Objects.Obj[x2, y2].Pat.Name = 'CHEST') then
       if M.Objects.Obj[x2, y2].FrameN = 0 then
       begin
