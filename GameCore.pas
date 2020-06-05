@@ -8,7 +8,7 @@ uses
 
 procedure Game_Init;
 procedure Game_Draw;
-procedure Game_Update; 
+procedure Game_Update;
 procedure Game_Quit;
 
 implementation
@@ -20,45 +20,51 @@ uses
 procedure Game_Init;
 var
   x, y, i, j, s, a: Integer;
+  MapPat: TMapPat;
 begin
   cam2d_Init(Cam);
 
   Data_Load;
 
   Map := TMap.Create(40, 40, 1);
-  Map.Ground.Fill('Grass');
+  MapPat := TMapPat(Pattern_Get('MAP', 'FOREST'));
+  Map.Ground.Fill(MapPat.Ground);
 
-  repeat
-    GenerateWalls(Map);
-
+  if MapPat.Walls then
+  begin
     repeat
+      GenerateWalls(Map);
+
+      repeat
+        s := 0;
+        x := Random(Map.Width);
+        y := Random(Map.Height);
+        for j := y - 1 to y + 1 do
+          for i := x - 1 to x + 1 do
+          begin
+            if (i < 0) or (j < 0) or (i >= Map.Width) or (j >= Map.Height) then
+              Continue;
+            if Map.Objects.Obj[i, j] <> nil then
+              s := 1;
+          end;
+      until s = 0;
+
+      CreateWave(Map, x, y, -1, 0, True);
+      ClearSmallRooms(Map);
+
       s := 0;
-      x := Random(Map.Width);
-      y := Random(Map.Height);
-      for j := y - 1 to y + 1 do
-        for i := x - 1 to x + 1 do
-        begin
-          if (i < 0) or (j < 0) or (i >= Map.Width) or (j >= Map.Height) then
-            Continue;
-          if Map.Objects.Obj[i, j] <> nil then
-            s := 1;
-        end;
-    until s = 0;
+      for j := 0 to Map.Height - 1 do
+        for i := 0 to Map.Width - 1 do
+          if Wave[i, j] > 0 then
+            s := s + 1;
 
-    CreateWave(Map, x, y, -1, 0, True);
-    ClearSmallRooms(Map);
+      if s <= 600 then
+        Map.Objects.Clear;
+    until s > 600;
 
-    s := 0;
-    for j := 0 to Map.Height - 1 do
-      for i := 0 to Map.Width - 1 do
-        if Wave[i, j] > 0 then
-          s := s + 1;
+    GenerateDoors(Map);
+  end;
 
-    if s <= 600 then
-      Map.Objects.Clear;
-  until s > 600;
-
-  GenerateDoors(Map);
   GenerateTreasures(Map);
 
   if Map.Objects.Obj[x, y] <> nil then
@@ -76,8 +82,10 @@ begin
   GenerateCreatures(Map);
 
   GenerateShrine(Map);
-  for a := 0 to 19 do
-    GenerateTree(Map);
+
+  if MapPat.Trees then
+    for a := 0 to 19 do
+      GenerateTree(Map);
 
   Hero := Map.CreateCreature('Man', x, y);
   Map.UpdateFog(Hero.TX, Hero.TY, 7);
@@ -127,23 +135,24 @@ end;
 // ==============================================================================
 procedure Game_Update;
 var
-  TX, TY, CX, CY, N, I: Integer;
+  TX, TY, cx, cy, N, i: Integer;
   Cr, Cr2: TCreature;
   bool: Boolean;
   ObjPat: TObjPat;
 
   procedure ItemToObject(ItName, ObjName: string);
   begin
-      if (DragItem.Pat.Name = ItName) then
-      begin
-        ObjPat := TObjPat(Pattern_Get('OBJECT', ObjName));
-        Map.Objects.ObjCreate(cX, cY, ObjPat);
-        HeroMoved := True;
-        DragItem.Count := DragItem.Count - 1;
-        if DragItem.Count = 0 then
-          DragItem := nil;    
-      end;
+    if (DragItem.Pat.Name = ItName) then
+    begin
+      ObjPat := TObjPat(Pattern_Get('OBJECT', ObjName));
+      Map.Objects.ObjCreate(cx, cy, ObjPat);
+      HeroMoved := True;
+      DragItem.Count := DragItem.Count - 1;
+      if DragItem.Count = 0 then
+        DragItem := nil;
+    end;
   end;
+
 begin
   if key_Press(K_ESCAPE) then
     zgl_Exit;
@@ -268,56 +277,56 @@ begin
   end;
 
   // Установка блоков на землю
-  if (Mouse_Click(M_BRIGHT)) and (MouseOverGUI = False) and (CX <> -1) and (Map.Objects.Obj[CX, CY] = nil)
-    and (DragItem <> nil) and (ABS(CX - Hero.TX) < 2) and (ABS(CY - Hero.TY) < 2) then
-      for I := 0 to High(ItemToObjRec) do
-        ItemToObject(ItemToObjRec[I].Item, ItemToObjRec[I].Obj);
+  if (mouse_Click(M_BRIGHT)) and (MouseOverGUI = False) and (cx <> -1) and (Map.Objects.Obj[cx, cy] = nil) and (DragItem <> nil) and
+    (ABS(cx - Hero.TX) < 2) and (ABS(cy - Hero.TY) < 2) then
+    for i := 0 to High(ItemToObjRec) do
+      ItemToObject(ItemToObjRec[i].Item, ItemToObjRec[i].Obj);
 
-  n := 0;
+  N := 0;
   if key_Press(K_LEFT) or key_Press(K_KP_4) then
-    n := 1;
+    N := 1;
   if key_Press(K_RIGHT) or key_Press(K_KP_6) then
-    n := 2;
+    N := 2;
   if key_Press(K_UP) or key_Press(K_KP_8) then
-    n := 3;
+    N := 3;
   if key_Press(K_DOWN) or key_Press(K_KP_2) then
-    n := 4;
+    N := 4;
   if key_Press(K_HOME) or key_Press(K_KP_7) then
-    n := 5;
+    N := 5;
   if key_Press(K_PAGEUP) or key_Press(K_KP_9) then
-    n := 6;
+    N := 6;
   if key_Press(K_END) or key_Press(K_KP_1) then
-    n := 7;
+    N := 7;
   if key_Press(K_PAGEDOWN) or key_Press(K_KP_3) then
-    n := 8;
+    N := 8;
   if key_Press(K_SPACE) then
-    n := 9;
-  if n <> 0 then
+    N := 9;
+  if N <> 0 then
     Hero.WalkTo.x := -1;
   if (DragItem <> nil) or (BtnDwn <> 0) then
-    n := 0;
+    N := 0;
   if NewGame then
-    n := 0;
+    N := 0;
 
   if (WalkPause = 0) and (Map.BulletsCnt = 0) then
   begin
-    if n = 1 then
+    if N = 1 then
       Hero.Walk(-1, 0);
-    if n = 2 then
+    if N = 2 then
       Hero.Walk(1, 0);
-    if n = 3 then
+    if N = 3 then
       Hero.Walk(0, -1);
-    if n = 4 then
+    if N = 4 then
       Hero.Walk(0, 1);
-    if n = 5 then
+    if N = 5 then
       Hero.Walk(-1, -1);
-    if n = 6 then
+    if N = 6 then
       Hero.Walk(1, -1);
-    if n = 7 then
+    if N = 7 then
       Hero.Walk(-1, 1);
-    if n = 8 then
+    if N = 8 then
       Hero.Walk(1, 1);
-    if n = 9 then
+    if N = 9 then
       HeroMoved := True;
 
     Hero.Update;
@@ -338,9 +347,9 @@ begin
     Map.ExplosiveBombs;
     Map.UpdateFog(Hero.TX, Hero.TY, 7);
     Map.MoveCreatures;
-    for n := 0 to Map.Creatures.Count - 1 do
+    for N := 0 to Map.Creatures.Count - 1 do
     begin
-      Cr := TCreature(Map.Creatures[n]);
+      Cr := TCreature(Map.Creatures[N]);
       Cr.UpdateEffects;
       if Cr.LifeTime > 0 then
         Cr.LifeTime := Cr.LifeTime - 1;

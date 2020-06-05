@@ -1,0 +1,5 @@
+Type = Map
+GameName = Лес
+Ground = Grass
+Trees = False
+Walls = True

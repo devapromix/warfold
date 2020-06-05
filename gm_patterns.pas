@@ -7,9 +7,9 @@ uses
 
 type
   TPattern = class
-    Name: String;
-    GameName: String;
-    pType: String;
+    Name: string;
+    GameName: string;
+    pType: string;
     Next: TPattern;
 
     Tex: zglPTexture;
@@ -23,6 +23,14 @@ type
 type
   TGroundPat = class(TPattern)
 
+  end;
+
+  // ------ Map -------------------------------------------------------------------
+type
+  TMapPat = class(TPattern)
+    Ground: string;
+    Walls: Boolean;
+    Trees: Boolean;
   end;
 
   // ------ Object ----------------------------------------------------------------
@@ -81,11 +89,6 @@ type
     Rock: Boolean;
     Hatchet: Boolean;
     Pickaxe: Boolean;
-  end;
-
-type
-  TMapPat = class(TPattern)
-    Name: String;
   end;
 
   // ------ Spells ----------------------------------------------------------------
@@ -154,6 +157,8 @@ begin
     Pat := TCrPat.Create;
   if u_StrUp(dat.Param('Type').str('')) = 'ITEM' then
     Pat := TItemPat.Create;
+  if u_StrUp(dat.Param('Type').str('')) = 'MAP' then
+    Pat := TMapPat.Create;
 
   if Pat = nil then
   begin
@@ -186,11 +191,20 @@ begin
       tex_SetFrameSize(Tex, FrmW, FrmH);
   end;
 
+  // ---------- Map -------------------------------------------------------------
+  if Pat.pType = 'MAP' then
+    with TMapPat(Pat) do
+    begin
+      Ground := dat.Param('Ground').str('Floor');
+      Walls := dat.Param('Walls').Bool(False);
+      Trees := dat.Param('Trees').Bool(False);
+    end;
+
   // ---------- Ground ----------------------------------------------------------
   if Pat.pType = 'GROUND' then
     with TGroundPat(Pat) do
     begin
-
+      
     end;
 
   // ---------- Object ----------------------------------------------------------
