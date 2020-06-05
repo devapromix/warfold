@@ -1,5 +1,5 @@
 Type = Map
 GameName = Лес
-Ground = Dirt
+Ground = Lava
 Trees = False
 Walls = True
