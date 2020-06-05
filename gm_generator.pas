@@ -679,8 +679,8 @@ begin
         ItemPat := TItemPat(Pattern_Get('ITEM', 'Book'));
       2:
         ItemPat := TItemPat(Pattern_Get('ITEM', 'Hatchet'));
-      else
-        ItemPat := TItemPat(Pattern_Get('ITEM', 'Pickaxe'));
+    else
+      ItemPat := TItemPat(Pattern_Get('ITEM', 'Pickaxe'));
     end;
     M.CreateItem(ItemPat, 1, i, j);
     ItmCnt := ItmCnt - 1;
@@ -820,18 +820,19 @@ begin
       Cr.Team := 1;
       if (Cr.Pat.Name = 'SKELET') and (Random(2) = 0) then
       begin
-        k := Random(5);
         ItemPat := nil;
-        if k = 0 then
-          ItemPat := TItemPat(Pattern_Get('ITEM', 'Sword'));
-        if k = 1 then
-          ItemPat := TItemPat(Pattern_Get('ITEM', 'Axe'));
-        if k = 2 then
-          ItemPat := TItemPat(Pattern_Get('ITEM', 'Rock'));
-        if k = 3 then
-          ItemPat := TItemPat(Pattern_Get('ITEM', 'Bow'));
-        if k = 4 then
+        case Random(5) of
+          0:
+            ItemPat := TItemPat(Pattern_Get('ITEM', 'Sword'));
+          1:
+            ItemPat := TItemPat(Pattern_Get('ITEM', 'Axe'));
+          2:
+            ItemPat := TItemPat(Pattern_Get('ITEM', 'Rock'));
+          3:
+            ItemPat := TItemPat(Pattern_Get('ITEM', 'Bow'));
+        else
           ItemPat := TItemPat(Pattern_Get('ITEM', 'Suriken'));
+        end;
         if ItemPat <> nil then
         begin
           Cr.RHandItem.Pat := ItemPat;
@@ -842,6 +843,11 @@ begin
           begin
             Cr.LHandItem.Pat := TItemPat(Pattern_Get('ITEM', 'Arrow'));
             Cr.LHandItem.Count := Random(7) + 3;
+          end;
+          if ItemPat.Sword then
+          begin
+            Cr.LHandItem.Pat := TItemPat(Pattern_Get('ITEM', 'Shield'));
+            Cr.LHandItem.Count := 1;
           end;
         end;
       end;
