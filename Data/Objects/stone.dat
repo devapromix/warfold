@@ -1,0 +1,4 @@
+Type = Object
+Texture = stone.png
+Wall = True
+Durability = 10

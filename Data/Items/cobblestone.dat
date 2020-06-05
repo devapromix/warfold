@@ -1,0 +1,9 @@
+Type = Item
+GameName = Булыжник
+Texture = cobblestone.png
+Equip = RHand
+Rotate = True
+CanGroup = True
+Throw = True
+Damage = 4
+Rock = True
