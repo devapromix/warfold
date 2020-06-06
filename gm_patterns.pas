@@ -39,9 +39,11 @@ type
     IsWall: Boolean;
     BlockWalk: Boolean;
     BlockLook: Boolean;
+    BlockWall: Boolean;
     Locked: Boolean;
     Container: Boolean;
     Shrine: Boolean;
+    Wall: Boolean;
     ShrineType: Integer;
     Durability: Integer;
   end;
@@ -218,6 +220,7 @@ begin
         BlockLook := True;
       BlockWalk := dat.Param('BlockWalk').Bool(BlockWalk);
       BlockLook := dat.Param('BlockLook').Bool(BlockLook);
+      BlockWall := dat.Param('BlockWall').Bool(False);
       Locked := dat.Param('Locked').Bool(False);
       Container := dat.Param('Container').Bool(False);
       Shrine := dat.Param('Shrine').Bool(False);

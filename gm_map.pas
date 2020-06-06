@@ -391,7 +391,7 @@ begin
       end;    
       if Objects.Obj[ i, j ] <> nil then
       begin
-        if Objects.Obj[ i, j ].Pat.Name = 'WALL' then
+        if Objects.Obj[ i, j ].Pat.BlockWall then
           pr2d_Rect( x + i * 5, y + j * 5, 5, 5, $999999, 255, PR2D_FILL );
         if Objects.Obj[ i, j ].Pat.Name = 'DOOR' then
           pr2d_Rect( x + i * 5, y + j * 5, 5, 5, $775544, 255, PR2D_FILL );
