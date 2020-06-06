@@ -1,6 +1,6 @@
 Type = Map
 GameName = Лес
-Ground = Sand
+Ground = Water
 Trees = True
 Plants = DTree
 PlantCount = 50
