@@ -1,0 +1,7 @@
+Type = Item
+GameName = Лопата
+Texture = shovel.png
+EquipTex = eaxe.png
+Equip = RHand
+Shovel = True
+Damage = 2
