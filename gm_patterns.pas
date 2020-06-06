@@ -33,6 +33,8 @@ type
     Walls  : Boolean;
     Trees  : Boolean;
     PlantCount: Integer;
+    Water  : Boolean;
+    WaterCount: Integer;
   end;
 
   // ------ Object ----------------------------------------------------------------
@@ -204,6 +206,8 @@ begin
       PlantCount := dat.Param('PlantCount').Int(0);
       Walls  := dat.Param('Walls').Bool(False);
       Trees  := dat.Param('Trees').Bool(False);
+      Water  := dat.Param('Water').Bool(False);
+      WaterCount := dat.Param('WaterCount').Int(0);
     end;
 
   // ---------- Ground ----------------------------------------------------------

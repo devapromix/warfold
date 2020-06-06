@@ -1,7 +1,9 @@
 Type = Map
 GameName = Лес
-Ground = Water
+Ground = Dirt
 Trees = True
 Plants = DTree
 PlantCount = 50
 Walls = False
+Water = True
+WaterCount = 20

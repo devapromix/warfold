@@ -812,7 +812,7 @@ begin
             else
               Cr := Map.CreateCreature('Skelet', i, j);
           1:
-            Cr := Map.CreateCreature('Skelet', i, j);
+            Cr := Map.CreateCreature('Hydra', i, j);
           2:
             Cr := Map.CreateCreature('Spider', i, j);
           3:
