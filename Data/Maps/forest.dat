@@ -2,4 +2,6 @@ Type = Map
 GameName = Лес
 Ground = Sand
 Trees = True
+Plants = DTree
+PlantCount = 50
 Walls = False

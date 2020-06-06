@@ -84,7 +84,7 @@ begin
   GenerateShrine(Map);
 
   if MapPat.Trees then
-    for a := 0 to 19 do
+    for a := 0 to MapPat.PlantCount-1 do
       GenerateTree(Map);
 
   Hero := Map.CreateCreature('Man', x, y);

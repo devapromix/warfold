@@ -72,14 +72,19 @@ end;
 procedure GenerateTree(M: TMap);
 var
   X, Y: Integer;
+  MapPat: TMapPat;
   TreePat: TObjPat;
 begin
-  TreePat := TObjPat(Pattern_Get('OBJECT', 'Tree'));
+  MapPat := TMapPat(Pattern_Get('MAP', 'FOREST'));
+  if MapPat.Plants <> '' then
+  begin
+  TreePat := TObjPat(Pattern_Get('OBJECT', MapPat.Plants));
   repeat
     X := Random(M.Width - 1) + 1;
     Y := Random(M.Height - 1) + 1;
   until (M.Objects.Obj[X, Y] = nil);
   M.Objects.ObjCreate(X, Y, TreePat);
+  end
 end;
 
 procedure GenerateShrine(M: TMap);

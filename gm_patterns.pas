@@ -28,9 +28,11 @@ type
   // ------ Map -------------------------------------------------------------------
 type
   TMapPat = class(TPattern)
-    Ground: string;
-    Walls: Boolean;
-    Trees: Boolean;
+    Ground : string;
+    Plants : string;
+    Walls  : Boolean;
+    Trees  : Boolean;
+    PlantCount: Integer;
   end;
 
   // ------ Object ----------------------------------------------------------------
@@ -198,8 +200,10 @@ begin
     with TMapPat(Pat) do
     begin
       Ground := dat.Param('Ground').str('Floor');
-      Walls := dat.Param('Walls').Bool(False);
-      Trees := dat.Param('Trees').Bool(False);
+      Plants := dat.Param('Plants').str('');
+      PlantCount := dat.Param('PlantCount').Int(0);
+      Walls  := dat.Param('Walls').Bool(False);
+      Trees  := dat.Param('Trees').Bool(False);
     end;
 
   // ---------- Ground ----------------------------------------------------------
