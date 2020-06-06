@@ -66,8 +66,8 @@ end;
 //==============================================================================
 procedure TGround.Fill( GroundName : String );
 var
-  Pat  : TGroundPat;
-  i, j : Integer;
+  Pat: TGroundPat;
+  i, j: Integer;
 begin
   Pat := TGroundPat( Pattern_Get( 'GROUND', GroundName ) );
   if Pat = nil then Exit;

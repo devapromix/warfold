@@ -26,14 +26,14 @@ begin
 
   Data_Load;
 
+  Map.Free;
   Map := TMap.Create(40, 40, 1);
   MapPat := TMapPat(Pattern_Get('MAP', 'FOREST'));
   Map.Ground.Fill(MapPat.Ground);
 
-  if MapPat.Walls then
-  begin
     repeat
-      GenerateWalls(Map);
+      if MapPat.Walls then
+        GenerateWalls(Map);
 
       repeat
         s := 0;
@@ -63,9 +63,8 @@ begin
     until s > 600;
 
     GenerateDoors(Map);
-  end;
+    GenerateTreasures(Map);
 
-  GenerateTreasures(Map);
 
   if Map.Objects.Obj[x, y] <> nil then
   begin
@@ -79,7 +78,8 @@ begin
     y := j;
   end;
   CreateWave(Map, x, y, -1, 0, True);
-  GenerateCreatures(Map);
+
+  //GenerateCreatures(Map);
 
   GenerateShrine(Map);
 
