@@ -773,8 +773,10 @@ var
 const
   WeaponPatterns: array[0..4] of string =
     ('Sword', 'Axe', 'Rock', 'Bow', 'Suriken');
+  CrPatterns: array [0..5] of string =
+    ('Skelet', 'Hydra', 'Spider', 'Scorpion', 'Darkeye', 'Snake');
 begin
-  cnt := Random(10) + 20;
+  Cnt := Random(10) + 20;
   CCnt := 0;
   NCnt := 0;
   repeat
@@ -805,26 +807,12 @@ begin
         CCnt := 1;
       end;
       if Cr = nil then
-        case Random(6) of
-          0:
-            if NCnt = 0 then
-            begin
-              Cr := Map.CreateCreature('Necromancer', i, j);
-              NCnt := 1;
-            end
-            else
-              Cr := Map.CreateCreature('Skelet', i, j);
-          1:
-            Cr := Map.CreateCreature('Hydra', i, j);
-          2:
-            Cr := Map.CreateCreature('Spider', i, j);
-          3:
-            Cr := Map.CreateCreature('Scorpion', i, j);
-          4:
-            Cr := Map.CreateCreature('Darkeye', i, j);
-        else
-          Cr := Map.CreateCreature('Snake', i, j);
-        end;
+        if NCnt = 0 then
+        begin
+          Cr := Map.CreateCreature('Necromancer', i, j);
+          NCnt := 1;
+        end else
+        Cr := Map.CreateCreature(CrPatterns[Random(Length(CrPatterns))], i, j);
       Cr.Team := 1;
       if (Cr.Pat.Name = 'SKELET') and (Random(2) = 0) then
       begin

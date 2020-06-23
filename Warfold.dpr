@@ -4,7 +4,7 @@ uses
   FastMM4,
   zglHeader,
   GameCore,
-  gm_types,
+  gm_types in 'gm_types.pas',
   gm_craft in 'gm_craft.pas';
 
 procedure gmInit;
