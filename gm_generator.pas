@@ -770,6 +770,9 @@ var
   Cr: TCreature;
   ItemPat: TItemPat;
   CCnt, NCnt: Integer;
+const
+  WeaponPatterns: array[0..4] of string =
+    ('Sword', 'Axe', 'Rock', 'Bow', 'Suriken');
 begin
   cnt := Random(10) + 20;
   CCnt := 0;
@@ -825,19 +828,8 @@ begin
       Cr.Team := 1;
       if (Cr.Pat.Name = 'SKELET') and (Random(2) = 0) then
       begin
-        ItemPat := nil;
-        case Random(5) of
-          0:
-            ItemPat := TItemPat(Pattern_Get('ITEM', 'Sword'));
-          1:
-            ItemPat := TItemPat(Pattern_Get('ITEM', 'Axe'));
-          2:
-            ItemPat := TItemPat(Pattern_Get('ITEM', 'Rock'));
-          3:
-            ItemPat := TItemPat(Pattern_Get('ITEM', 'Bow'));
-        else
-          ItemPat := TItemPat(Pattern_Get('ITEM', 'Suriken'));
-        end;
+        ItemPat := TItemPat(Pattern_Get('ITEM',
+          WeaponPatterns[Random(Length(WeaponPatterns))]));
         if ItemPat <> nil then
         begin
           Cr.RHandItem.Pat := ItemPat;
