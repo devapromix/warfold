@@ -763,6 +763,14 @@ begin
   end;
 end;
 
+type
+  TCreatureGenerationOption = record
+    TemplateName: string;
+    Chance: Integer;
+    Limit: Integer;
+    Count: Integer;
+  end;
+
 procedure GenerateCreatures(M: TMap);
 var
   i, j, cnt, k: Integer;
@@ -806,6 +814,32 @@ begin
         Cr := Map.CreateCreature('Leech', i, j);
         CCnt := 1;
       end;
+{
+// default creature generation options, but different could be passed to GenerateCreatures method
+// better extract to custom collection class, to encapsulate logic and to load from external source
+var 
+  Lottery: TList<Integer>;
+  CreatureGenerationOptions: array[0..5] of TCreatureGenerationOption = (
+    (Name: 'Necromancer'; Chance: 1; Limit: 1), (Name: 'Skelet'; Chance: 2),
+    (Name: 'Hydra'; Chance: 1), (Name: 'Spider'; Chance: 1),
+    (Name: 'DarkEye'; Chance: 1), (Name: 'Snake'; Chance: 1));
+... // skipped some obvious declarations and initializing
+for OIndex := 0 to High(CreatureGenerationOptions) do
+  for I := 0 to CreatureGenerationOptions[OIndex].Chance - 1 do
+    Lottery.Add(OIndex);
+CreaturesGenerated = 0;
+while CreaturesGenerated < CreaturesLimit do
+begin
+  Option := CreatureGenerationOptions[Lottery[Random(Length(Lottery))]];
+  if (Option.Limit > 0) and (Option.Count >= Option.Limit)
+    continue;
+  
+  Cr := Map.CreateCreature(Option.TemplateName, X, Y);
+  Inc(Option.Count);
+  Inc(CreaturesGenerated);
+  ...
+end;
+}
       if Cr = nil then
         if NCnt = 0 then
         begin
