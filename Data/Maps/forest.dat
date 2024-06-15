@@ -1,10 +1,10 @@
 Type = Map
-GameName = Лес
+GameName = Forest
 Ground = Dirt
+Walls = False
 Trees = True
 Plants = DTree
 PlantCount = 50
-Walls = False
 Water = True
 WaterCount = 20
 Creatures = Snake

@@ -649,8 +649,8 @@ begin
 
   if (PanelN = 3) then
   begin
-    i := (ScreenW - 200) + (200 - DollTex.Width) div 2;
-    j := 370;
+    //i := (ScreenW - 200) + (200 - DollTex.Width) div 2;
+    //j := 370;
     {if mouse_Click(M_BLEFT) then
     begin
       if PointInRect(mouse_X, mouse_Y, i + 28, j + 93, 33, 33) then

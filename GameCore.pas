@@ -24,14 +24,14 @@ var
 begin
   cam2d_Init(Cam);
 
-  Data_Load;  
+  Data_Load;
 
   Map.Free;
   Map := TMap.Create(40, 40, 1);
   MapPat := TMapPat(Pattern_Get('MAP', 'FOREST'));
   Map.Ground.Fill(MapPat.Ground);
   if MapPat.Water then
-  Map.Ground.FillRandom('WATER', MapPat.WaterCount);
+    Map.Ground.FillRandom('WATER', MapPat.WaterCount);
 
     repeat
       if MapPat.Walls then
