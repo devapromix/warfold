@@ -7,9 +7,9 @@ uses
 
 type
   TPattern = class
-    Name: string;
-    GameName: string;
-    pType: string;
+    Name: String;
+    GameName: String;
+    pType: String;
     Next: TPattern;
 
     Tex: zglPTexture;
@@ -25,29 +25,15 @@ type
 
   end;
 
-  // ------ Map -------------------------------------------------------------------
-type
-  TMapPat = class(TPattern)
-    Ground : string;
-    Plants : string;
-    Walls  : Boolean;
-    Trees  : Boolean;
-    PlantCount: Integer;
-    Water  : Boolean;
-    WaterCount: Integer;
-  end;
-
   // ------ Object ----------------------------------------------------------------
 type
   TObjPat = class(TPattern)
     IsWall: Boolean;
     BlockWalk: Boolean;
     BlockLook: Boolean;
-    BlockWall: Boolean;
     Locked: Boolean;
     Container: Boolean;
     Shrine: Boolean;
-    Wall: Boolean;
     ShrineType: Integer;
     Durability: Integer;
   end;
@@ -95,6 +81,11 @@ type
     Rock: Boolean;
     Hatchet: Boolean;
     Pickaxe: Boolean;
+  end;
+
+type
+  TMapPat = class(TPattern)
+    Name: String;
   end;
 
   // ------ Spells ----------------------------------------------------------------
@@ -163,8 +154,6 @@ begin
     Pat := TCrPat.Create;
   if u_StrUp(dat.Param('Type').str('')) = 'ITEM' then
     Pat := TItemPat.Create;
-  if u_StrUp(dat.Param('Type').str('')) = 'MAP' then
-    Pat := TMapPat.Create;
 
   if Pat = nil then
   begin
@@ -197,24 +186,11 @@ begin
       tex_SetFrameSize(Tex, FrmW, FrmH);
   end;
 
-  // ---------- Map -------------------------------------------------------------
-  if Pat.pType = 'MAP' then
-    with TMapPat(Pat) do
-    begin
-      Ground := dat.Param('Ground').str('Floor');
-      Plants := dat.Param('Plants').str('');
-      PlantCount := dat.Param('PlantCount').Int(0);
-      Walls  := dat.Param('Walls').Bool(False);
-      Trees  := dat.Param('Trees').Bool(False);
-      Water  := dat.Param('Water').Bool(False);
-      WaterCount := dat.Param('WaterCount').Int(0);
-    end;
-
   // ---------- Ground ----------------------------------------------------------
   if Pat.pType = 'GROUND' then
     with TGroundPat(Pat) do
     begin
-      
+
     end;
 
   // ---------- Object ----------------------------------------------------------
@@ -228,7 +204,6 @@ begin
         BlockLook := True;
       BlockWalk := dat.Param('BlockWalk').Bool(BlockWalk);
       BlockLook := dat.Param('BlockLook').Bool(BlockLook);
-      BlockWall := dat.Param('BlockWall').Bool(False);
       Locked := dat.Param('Locked').Bool(False);
       Container := dat.Param('Container').Bool(False);
       Shrine := dat.Param('Shrine').Bool(False);

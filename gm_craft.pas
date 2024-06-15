@@ -34,10 +34,9 @@ type
 
 const
   // Добывание предметов из объектов
-  ObjToItemRec: array[0..2] of TObjToItemRecStr = (
+  ObjToItemRec: array[0..1] of TObjToItemRecStr = (
   // Доб. бревна из дерева
   (Obj:'TREE';      Item:'WOOD';    ItemCount:ic2To4;     Tool:tlHatchet),
-  (Obj:'DTREE';     Item:'WOOD';    ItemCount:icOne;      Tool:tlHatchet),
   // Доб. булыжник из стен
   (Obj:'WALL';      Item:'ROCK';    ItemCount:ic2To4;     Tool:tlPickaxe)
   //
