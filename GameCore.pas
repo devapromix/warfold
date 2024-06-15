@@ -14,7 +14,7 @@ procedure Game_Quit;
 implementation
 
 uses
-  Dialogs, gm_craft;
+  gm_craft;
 
 // ==============================================================================
 procedure Game_Init;
@@ -89,7 +89,7 @@ begin
     for a := 0 to MapPat.PlantCount-1 do
       GenerateTree(Map);
 
-  Hero := Map.CreateCreature('Man', x, y);
+  Hero := Map.CreateCreature('Skelet', x, y);
   Map.UpdateFog(Hero.TX, Hero.TY, 7);
 
   TreasuresConvert(Map);
