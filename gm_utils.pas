@@ -6,8 +6,14 @@ uses
   Windows;
 
 function A2U8(const S: string; const cp : integer = 1251): UTF8String;
+//function A2U8(const S: AnsiString): AnsiString;
 
 implementation
+
+//function A2U8(const S: AnsiString): AnsiString;
+//begin
+//  Result := S;
+//end;
 
 //==============================================================================
 function A2U8(const S: string; const cp : integer = 1251): UTF8String;
@@ -28,6 +34,6 @@ begin
   finally
     FreeMemory(WBuf);
   end;
-end;
+end; 
 
 end.

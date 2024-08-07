@@ -1,9 +1,9 @@
 Type = Map
 GameName = Forest
-Ground = Dirt
+Ground = Grass
 Walls = False
-Trees = True
+Trees = False
 Plants = DTree
-PlantCount = 50
-Water = True
-WaterCount = 20
+PlantCount = 0
+Water = False
+WaterCount = 0
