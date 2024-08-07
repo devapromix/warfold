@@ -72,19 +72,14 @@ end;
 procedure GenerateTree(M: TMap);
 var
   X, Y: Integer;
-  MapPat: TMapPat;
   TreePat: TObjPat;
 begin
-  MapPat := TMapPat(Pattern_Get('MAP', 'FOREST'));
-  if MapPat.Plants <> '' then
-  begin
-  TreePat := TObjPat(Pattern_Get('OBJECT', MapPat.Plants));
+  TreePat := TObjPat(Pattern_Get('OBJECT', 'Tree'));
   repeat
     X := Random(M.Width - 1) + 1;
     Y := Random(M.Height - 1) + 1;
   until (M.Objects.Obj[X, Y] = nil);
   M.Objects.ObjCreate(X, Y, TreePat);
-  end
 end;
 
 procedure GenerateShrine(M: TMap);
@@ -684,8 +679,8 @@ begin
         ItemPat := TItemPat(Pattern_Get('ITEM', 'Book'));
       2:
         ItemPat := TItemPat(Pattern_Get('ITEM', 'Hatchet'));
-    else
-      ItemPat := TItemPat(Pattern_Get('ITEM', 'Pickaxe'));
+      else
+        ItemPat := TItemPat(Pattern_Get('ITEM', 'Pickaxe'));
     end;
     M.CreateItem(ItemPat, 1, i, j);
     ItmCnt := ItmCnt - 1;
@@ -763,14 +758,6 @@ begin
   end;
 end;
 
-type
-  TCreatureGenerationOption = record
-    TemplateName: string;
-    Chance: Integer;
-    Limit: Integer;
-    Count: Integer;
-  end;
-
 procedure GenerateCreatures(M: TMap);
 var
   i, j, cnt, k: Integer;
@@ -778,13 +765,8 @@ var
   Cr: TCreature;
   ItemPat: TItemPat;
   CCnt, NCnt: Integer;
-const
-  WeaponPatterns: array[0..4] of string =
-    ('Sword', 'Axe', 'Rock', 'Bow', 'Suriken');
-  CrPatterns: array [0..5] of string =
-    ('Skelet', 'Hydra', 'Spider', 'Scorpion', 'Darkeye', 'Snake');
 begin
-  Cnt := Random(10) + 20;
+  cnt := Random(10) + 20;
   CCnt := 0;
   NCnt := 0;
   repeat
@@ -814,44 +796,42 @@ begin
         Cr := Map.CreateCreature('Leech', i, j);
         CCnt := 1;
       end;
-{
-// default creature generation options, but different could be passed to GenerateCreatures method
-// better extract to custom collection class, to encapsulate logic and to load from external source
-var 
-  Lottery: TList<Integer>;
-  CreatureGenerationOptions: array[0..5] of TCreatureGenerationOption = (
-    (Name: 'Necromancer'; Chance: 1; Limit: 1), (Name: 'Skelet'; Chance: 2),
-    (Name: 'Hydra'; Chance: 1), (Name: 'Spider'; Chance: 1),
-    (Name: 'DarkEye'; Chance: 1), (Name: 'Snake'; Chance: 1));
-... // skipped some obvious declarations and initializing
-for OIndex := 0 to High(CreatureGenerationOptions) do
-  for I := 0 to CreatureGenerationOptions[OIndex].Chance - 1 do
-    Lottery.Add(OIndex);
-CreaturesGenerated = 0;
-while CreaturesGenerated < CreaturesLimit do
-begin
-  Option := CreatureGenerationOptions[Lottery[Random(Length(Lottery))]];
-  if (Option.Limit > 0) and (Option.Count >= Option.Limit)
-    continue;
-  
-  Cr := Map.CreateCreature(Option.TemplateName, X, Y);
-  Inc(Option.Count);
-  Inc(CreaturesGenerated);
-  ...
-end;
-}
       if Cr = nil then
-        if NCnt = 0 then
-        begin
-          Cr := Map.CreateCreature('Necromancer', i, j);
-          NCnt := 1;
-        end else
-        Cr := Map.CreateCreature(CrPatterns[Random(Length(CrPatterns))], i, j);
+        case Random(6) of
+          0:
+            if NCnt = 0 then
+            begin
+              Cr := Map.CreateCreature('Necromancer', i, j);
+              NCnt := 1;
+            end
+            else
+              Cr := Map.CreateCreature('Skelet', i, j);
+          1:
+            Cr := Map.CreateCreature('Skelet', i, j);
+          2:
+            Cr := Map.CreateCreature('Spider', i, j);
+          3:
+            Cr := Map.CreateCreature('Scorpion', i, j);
+          4:
+            Cr := Map.CreateCreature('Darkeye', i, j);
+        else
+          Cr := Map.CreateCreature('Snake', i, j);
+        end;
       Cr.Team := 1;
       if (Cr.Pat.Name = 'SKELET') and (Random(2) = 0) then
       begin
-        ItemPat := TItemPat(Pattern_Get('ITEM',
-          WeaponPatterns[Random(Length(WeaponPatterns))]));
+        k := Random(5);
+        ItemPat := nil;
+        if k = 0 then
+          ItemPat := TItemPat(Pattern_Get('ITEM', 'Sword'));
+        if k = 1 then
+          ItemPat := TItemPat(Pattern_Get('ITEM', 'Axe'));
+        if k = 2 then
+          ItemPat := TItemPat(Pattern_Get('ITEM', 'Rock'));
+        if k = 3 then
+          ItemPat := TItemPat(Pattern_Get('ITEM', 'Bow'));
+        if k = 4 then
+          ItemPat := TItemPat(Pattern_Get('ITEM', 'Suriken'));
         if ItemPat <> nil then
         begin
           Cr.RHandItem.Pat := ItemPat;
@@ -862,11 +842,6 @@ end;
           begin
             Cr.LHandItem.Pat := TItemPat(Pattern_Get('ITEM', 'Arrow'));
             Cr.LHandItem.Count := Random(7) + 3;
-          end;
-          if ItemPat.Sword then
-          begin
-            Cr.LHandItem.Pat := TItemPat(Pattern_Get('ITEM', 'Shield'));
-            Cr.LHandItem.Count := 1;
           end;
         end;
       end;

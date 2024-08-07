@@ -44,7 +44,7 @@ begin
   zgl_Enable( CLIP_INVISIBLE );
 
   ScreenW := 1200;
-  ScreenH := 600;   
+  ScreenH := 720;   
 
   scr_SetOptions( ScreenW, ScreenH, REFRESH_MAXIMUM, FullScr, VSync );
   zgl_Init;

@@ -8,34 +8,28 @@ uses
 
 procedure Game_Init;
 procedure Game_Draw;
-procedure Game_Update;
+procedure Game_Update; 
 procedure Game_Quit;
 
 implementation
 
 uses
-  gm_craft;
+  Dialogs, gm_craft;
 
 // ==============================================================================
 procedure Game_Init;
 var
   x, y, i, j, s, a: Integer;
-  MapPat: TMapPat;
 begin
   cam2d_Init(Cam);
 
   Data_Load;
 
-  Map.Free;
-  Map := TMap.Create(40, 40, 1);
-  MapPat := TMapPat(Pattern_Get('MAP', 'FOREST'));
-  Map.Ground.Fill(MapPat.Ground);
-  if MapPat.Water then
-    Map.Ground.FillRandom('WATER', MapPat.WaterCount);
+  Map := TMap.Create(60, 160, 1);
+  Map.Ground.Fill('Grass');
 
   repeat
-    if MapPat.Walls then
-      GenerateWalls(Map);
+    GenerateWalls(Map);
 
     repeat
       s := 0;
@@ -78,16 +72,12 @@ begin
     x := i;
     y := j;
   end;
-
   CreateWave(Map, x, y, -1, 0, True);
-
   GenerateCreatures(Map);
 
   GenerateShrine(Map);
-
-  if MapPat.Trees then
-    for a := 0 to MapPat.PlantCount - 1 do
-      GenerateTree(Map);
+  for a := 0 to 19 do
+    GenerateTree(Map);
 
   Hero := Map.CreateCreature('Man', x, y);
   Map.UpdateFog(Hero.TX, Hero.TY, 7);
@@ -130,32 +120,30 @@ begin
   if Hero.Health = 0 then
   begin
     pr2d_Rect(0, 0, ScreenW, ScreenH, $232323, 200, PR2D_FILL);
-    text_DrawEx(Fnt, ScreenW div 2, ScreenH div 2, 1, 0, 'Game Over', 255,
-      $FFFFFF, TEXT_HALIGN_CENTER);
+    text_DrawEx(Fnt, ScreenW div 2, ScreenH div 2, 1, 0, 'Game Over', 255, $FFFFFF, TEXT_HALIGN_CENTER);
   end;
 end;
 
 // ==============================================================================
 procedure Game_Update;
 var
-  TX, TY, cx, cy, N, i: Integer;
+  TX, TY, CX, CY, N, I: Integer;
   Cr, Cr2: TCreature;
   bool: Boolean;
   ObjPat: TObjPat;
 
   procedure ItemToObject(ItName, ObjName: string);
   begin
-    if (DragItem.Pat.Name = ItName) then
-    begin
-      ObjPat := TObjPat(Pattern_Get('OBJECT', ObjName));
-      Map.Objects.ObjCreate(cx, cy, ObjPat);
-      HeroMoved := True;
-      DragItem.Count := DragItem.Count - 1;
-      if DragItem.Count = 0 then
-        DragItem := nil;
-    end;
+      if (DragItem.Pat.Name = ItName) then
+      begin
+        ObjPat := TObjPat(Pattern_Get('OBJECT', ObjName));
+        Map.Objects.ObjCreate(cX, cY, ObjPat);
+        HeroMoved := True;
+        DragItem.Count := DragItem.Count - 1;
+        if DragItem.Count = 0 then
+          DragItem := nil;    
+      end;
   end;
-
 begin
   if key_Press(K_ESCAPE) then
     zgl_Exit;
@@ -211,11 +199,9 @@ begin
             Hero.Enemy := Cr;
         if SellSpellN <> -1 then
         begin
-          if (Hero.Enemy <> nil) and
-            (Hero.Spells[SellSpellN].Name = 'Огненный шар') then
+          if (Hero.Enemy <> nil) and (Hero.Spells[SellSpellN].Name = 'Огненный шар') then
             Hero.UseSpellN := SellSpellN;
-          if (Hero.Enemy <> nil) and (Hero.Spells[SellSpellN].Name = 'Гипноз')
-          then
+          if (Hero.Enemy <> nil) and (Hero.Spells[SellSpellN].Name = 'Гипноз') then
           begin
             Hero.Enemy.AddEffect('Гипноз', 21);
             Hero.Mana := Hero.Mana - Hero.Spells[SellSpellN].Mana;
@@ -226,8 +212,7 @@ begin
             HeroMoved := True;
             SellSpellN := -1;
           end;
-          if (Hero.Enemy <> nil) and (Hero.Spells[SellSpellN].Name = 'Заморозка')
-          then
+          if (Hero.Enemy <> nil) and (Hero.Spells[SellSpellN].Name = 'Заморозка') then
           begin
             Hero.Enemy.AddEffect('Заморозка', 21);
             Hero.Mana := Hero.Mana - Hero.Spells[SellSpellN].Mana;
@@ -273,8 +258,7 @@ begin
           DragItem := nil;
     end;
   end;
-  if (mouse_Click(M_BRIGHT)) and (MouseOverGUI = False) and (cx <> -1) and
-    (DragItem = nil) then
+  if (mouse_Click(M_BRIGHT)) and (MouseOverGUI = False) and (cx <> -1) and (DragItem = nil) then
   begin
     Cr := Map.GetCreature(cx, cy);
     if (Cr <> nil) and (Cr <> Hero) then
@@ -284,57 +268,56 @@ begin
   end;
 
   // Установка блоков на землю
-  if (mouse_Click(M_BRIGHT)) and (MouseOverGUI = False) and (cx <> -1) and
-    (Map.Objects.Obj[cx, cy] = nil) and (DragItem <> nil) and
-    (ABS(cx - Hero.TX) < 2) and (ABS(cy - Hero.TY) < 2) then
-    for i := 0 to High(ItemToObjRec) do
-      ItemToObject(ItemToObjRec[i].Item, ItemToObjRec[i].Obj);
+  if (Mouse_Click(M_BRIGHT)) and (MouseOverGUI = False) and (CX <> -1) and (Map.Objects.Obj[CX, CY] = nil)
+    and (DragItem <> nil) and (ABS(CX - Hero.TX) < 2) and (ABS(CY - Hero.TY) < 2) then
+      for I := 0 to High(ItemToObjRec) do
+        ItemToObject(ItemToObjRec[I].Item, ItemToObjRec[I].Obj);
 
-  N := 0;
+  n := 0;
   if key_Press(K_LEFT) or key_Press(K_KP_4) then
-    N := 1;
+    n := 1;
   if key_Press(K_RIGHT) or key_Press(K_KP_6) then
-    N := 2;
+    n := 2;
   if key_Press(K_UP) or key_Press(K_KP_8) then
-    N := 3;
+    n := 3;
   if key_Press(K_DOWN) or key_Press(K_KP_2) then
-    N := 4;
+    n := 4;
   if key_Press(K_HOME) or key_Press(K_KP_7) then
-    N := 5;
+    n := 5;
   if key_Press(K_PAGEUP) or key_Press(K_KP_9) then
-    N := 6;
+    n := 6;
   if key_Press(K_END) or key_Press(K_KP_1) then
-    N := 7;
+    n := 7;
   if key_Press(K_PAGEDOWN) or key_Press(K_KP_3) then
-    N := 8;
+    n := 8;
   if key_Press(K_SPACE) then
-    N := 9;
-  if N <> 0 then
+    n := 9;
+  if n <> 0 then
     Hero.WalkTo.x := -1;
   if (DragItem <> nil) or (BtnDwn <> 0) then
-    N := 0;
+    n := 0;
   if NewGame then
-    N := 0;
+    n := 0;
 
   if (WalkPause = 0) and (Map.BulletsCnt = 0) then
   begin
-    if N = 1 then
+    if n = 1 then
       Hero.Walk(-1, 0);
-    if N = 2 then
+    if n = 2 then
       Hero.Walk(1, 0);
-    if N = 3 then
+    if n = 3 then
       Hero.Walk(0, -1);
-    if N = 4 then
+    if n = 4 then
       Hero.Walk(0, 1);
-    if N = 5 then
+    if n = 5 then
       Hero.Walk(-1, -1);
-    if N = 6 then
+    if n = 6 then
       Hero.Walk(1, -1);
-    if N = 7 then
+    if n = 7 then
       Hero.Walk(-1, 1);
-    if N = 8 then
+    if n = 8 then
       Hero.Walk(1, 1);
-    if N = 9 then
+    if n = 9 then
       HeroMoved := True;
 
     Hero.Update;
@@ -355,9 +338,9 @@ begin
     Map.ExplosiveBombs;
     Map.UpdateFog(Hero.TX, Hero.TY, 7);
     Map.MoveCreatures;
-    for N := 0 to Map.Creatures.Count - 1 do
+    for n := 0 to Map.Creatures.Count - 1 do
     begin
-      Cr := TCreature(Map.Creatures[N]);
+      Cr := TCreature(Map.Creatures[n]);
       Cr.UpdateEffects;
       if Cr.LifeTime > 0 then
         Cr.LifeTime := Cr.LifeTime - 1;
